@@ -2,27 +2,23 @@ import { useState, MouseEvent} from 'react';
 import { CourseListItem } from '@/components/CourseListItem';
 import ListFilter from '@/components/ListFilter';
 import { Course } from '@/interfaces/courses';
+import { Filters } from '@/interfaces/filters';
 import styles from '@/styles/coursesSplitView.module.css';
 
 interface Props {
-  courses: Course[] | null;
+  courses: Course[];
   starredCourses: Course[];
   handleListClick: (e: MouseEvent<HTMLElement>, course: Course) => void;
 }
 
 const CoursesList = ({ courses, starredCourses, handleListClick }: Props) => {
-  // const [filters, setFilters] = useState<((course: Course) => boolean)[] | null>(null)
-  
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>(courses)
 
   return (
     <div className={styles.listcontainer} >
-      {/* <ListFilter filters={filters} setFilters={setFilters} /> */}
-      <ListFilter />
-      {courses === null ? (
-        <p>loading courses from Bowdoin's database...</p>
-      ) : (
-        <ul className={styles.list}>
-          {courses.map((course: Course) => (
+      <ListFilter courses={courses} setFilteredCourses={setFilteredCourses}/>
+      {<ul className={styles.list}>
+          {filteredCourses.map((course) => (
         <CourseListItem
           course={course}
           handleListClick={handleListClick}
@@ -30,7 +26,7 @@ const CoursesList = ({ courses, starredCourses, handleListClick }: Props) => {
         />
       ))}
         </ul>
-      )}
+      }
     </div>
   );
 };

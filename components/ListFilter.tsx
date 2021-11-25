@@ -1,28 +1,46 @@
-import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import styles from '@/styles/coursesSplitView.module.css';
 import { Course } from '@/interfaces/courses';
 import { Filters } from '@/interfaces/filters';
-import CourseFocus from './CourseFocus';
 
 interface Props {
-    // filteredCourses: Course[],
-    // setFilteredCourses: Dispatch<SetStateAction<Course[]>>
+  courses: Course[];
+  setFilteredCourses: Dispatch<SetStateAction<Course[]>>;
 }
-// const ListFilter = ({filteredCourses, setFilteredCourses}: Props) => {
-const ListFilter = (props: Props) => {
+const ListFilter = ({ courses, setFilteredCourses }: Props) => {
   const [filters, setFilters] = useState<Filters>({});
   const [searchStr, setSearchStr] = useState('');
-  
+
+  const doFilters = (course: Course): boolean => {
+    let flag = true;
+    for (const [k, fn] of Object.entries(filters)) {
+      flag = fn(course) ? flag : false;
+    }
+    return flag;
+  };
+
+  useEffect(() => {
+    if (searchStr === '') return;
+    setFilteredCourses(courses.filter(doFilters));
+  }, [searchStr]);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      setSearchStr(e.target.value);
-      setFilters({...filters, queryFilter: (course) => course.title.includes(searchStr) })
-      // setFilteredCourses(filteredCourses.filter( course => {
-      //     let flag = true;
-      //     for (const [k, fn] of Object.entries(filters)) {
-      //       flag = fn(course) ? flag : false
-      //     }
-      //     return flag
-      // }))
+    setSearchStr(e.target.value);
+    if (e.target.value != '') {
+      setFilters({
+        ...filters,
+        queryFilter: (course: Course) =>
+          course.title
+            .toLocaleLowerCase()
+            .includes(e.target.value.toLocaleLowerCase()),
+      });
+    }
   };
 
   return (
