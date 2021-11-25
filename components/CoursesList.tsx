@@ -2,7 +2,6 @@ import { useState, MouseEvent} from 'react';
 import { CourseListItem } from '@/components/CourseListItem';
 import ListFilter from '@/components/ListFilter';
 import { Course } from '@/interfaces/courses';
-import { Filters } from '@/interfaces/filters';
 import styles from '@/styles/coursesSplitView.module.css';
 
 interface Props {

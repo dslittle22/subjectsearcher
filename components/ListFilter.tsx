@@ -8,44 +8,34 @@ import {
 import styles from '@/styles/coursesSplitView.module.css';
 import { Course } from '@/interfaces/courses';
 import { Filters } from '@/interfaces/filters';
-
+import {
+  getQueryParam,
+  addQueryParam,
+  applyFilters,
+  udpateQueryFilter,
+} from '@/lib/filters';
 interface Props {
   courses: Course[];
   setFilteredCourses: Dispatch<SetStateAction<Course[]>>;
 }
+
 const ListFilter = ({ courses, setFilteredCourses }: Props) => {
   const [filters, setFilters] = useState<Filters>({});
-  const [searchStr, setSearchStr] = useState('');
-
-  const doFilters = (course: Course): boolean => {
-    let flag = true;
-    for (const [k, fn] of Object.entries(filters)) {
-      flag = fn(course) ? flag : false;
-    }
-    return flag;
-  };
+  const [searchStr, setSearchStr] = useState(getQueryParam('query'));
 
   useEffect(() => {
-    if (searchStr === '') return;
-    setFilteredCourses(courses.filter(doFilters));
+    setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
   }, [searchStr]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchStr(e.target.value);
-    if (e.target.value != '') {
-      setFilters({
-        ...filters,
-        queryFilter: (course: Course) =>
-          course.title
-            .toLocaleLowerCase()
-            .includes(e.target.value.toLocaleLowerCase()),
-      });
-    }
+    addQueryParam('query', e.target.value.toLocaleLowerCase());
+    udpateQueryFilter(filters, setFilters, e.target.value);
   };
 
   return (
     <div className={styles.filter}>
-      Filter
+      Search: {' '}
       <input value={searchStr} onChange={handleChange} />
     </div>
   );

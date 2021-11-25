@@ -1,5 +1,6 @@
-import { Course } from '@/interfaces/courses'
+import { Course } from '@/interfaces/courses';
 
 export interface Filters {
-    queryFilter?: (course: Course) => boolean
-  }
+  query?: (course: Course) => boolean;
+  date?: (course: Course) => boolean;
+}
