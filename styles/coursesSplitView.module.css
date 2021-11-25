@@ -1,0 +1,39 @@
+.container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-areas: 
+        "listcontainer focus";
+}
+
+.filter {
+    grid-area: filter;
+}
+.listcontainer {
+    padding: 1rem 1rem;
+    grid-area: listcontainer;
+    background-color: rgb(179, 179, 179);
+    height: 100vh;
+    display: grid;
+    grid-template-areas: 
+    "filter"
+    "list";
+    grid-template-rows: 200px 1fr;
+}
+
+.list {
+    overflow-y: scroll;
+    list-style-type: none;
+}
+
+.listitem:hover {
+    text-decoration: underline;
+}
+    
+.focus {
+    padding: 1rem;
+    grid-area: focus;
+}
+
+.focusheader {
+    text-align: center;
+}
