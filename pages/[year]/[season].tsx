@@ -24,7 +24,7 @@ function SemesterView({}) {
     };
 
     tryToFetch();
-  }, [router.isReady]);
+  }, [router, router.isReady]);
 
   return (<CoursesSplitView courses={courses} />)
 

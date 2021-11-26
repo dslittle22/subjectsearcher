@@ -14,12 +14,15 @@ export default function CourseFocus({ focusedCourse }: Props) {
         <h1>Subject Searcher</h1>
       </div>
       {focusedCourse === null ? (
-        <p>Welcome to SubjectSearcher, a replacement for Bowdoin's ClassFinder. 
-          Click on a class to view its info!
+        <p>
+          {
+            "Welcome to SubjectSearcher, a replacement for Bowdoin's ClassFinder.\
+            Click on a class to view its info!"
+          }
         </p>
       ) : (
         <div>
-          <CourseInfo course={focusedCourse}/>
+          <CourseInfo course={focusedCourse} />
         </div>
       )}
     </div>

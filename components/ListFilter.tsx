@@ -32,7 +32,7 @@ const ListFilter = ({ courses, setFilteredCourses }: Props) => {
 
   useEffect(() => {
     setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
-  }, [searchStr]);
+  }, [searchStr, courses, filters, setFilteredCourses]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchStr(e.target.value);
