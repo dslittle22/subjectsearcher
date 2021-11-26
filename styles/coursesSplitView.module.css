@@ -1,16 +1,16 @@
 .container {
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas: 
-        "listcontainer focus";
+        "focus list_container";
 }
 
 .filter {
     grid-area: filter;
 }
-.listcontainer {
+.list_container {
     padding: 1rem 1rem;
-    grid-area: listcontainer;
+    grid-area: list_container;
     background-color: rgb(179, 179, 179);
     height: 100vh;
     display: grid;
@@ -25,8 +25,21 @@
     list-style-type: none;
 }
 
-.listitem:hover {
+.listitem {
+    padding: 0.75rem 0.25rem;
+    border: 1px solid black;
+}
+
+.listitem:hover, .copyable:hover {
     text-decoration: underline;
+}
+
+.listitem:nth-of-type(even){
+    background-color: rgb(230, 230, 230);
+}
+
+.copyable {
+    color:rgb(43, 145, 46)
 }
     
 .focus {
@@ -36,4 +49,22 @@
 
 .focusheader {
     text-align: center;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .container {
+        display: block;
+    }
+    
+    .focus {
+        min-height: 40vh;
+    }
+
+    .list_container {
+        min-height: 60vh;
+        height: auto;
+        max-height: 100vh;
+        grid-template-rows: 100px 1fr;
+    }
 }

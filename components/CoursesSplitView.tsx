@@ -14,8 +14,9 @@ const CoursesSplitView = ({ courses }: Props) => {
 
   return (
     <div className={styles.container}>
+      <CourseFocus focusedCourse={focusedCourse} />
       {courses === null ? (
-        <p className={styles.listcontainer}>Loading courses...</p>
+        <p className={styles.list_container}>Loading courses...</p>
       ) : (
         <CoursesList
         courses={courses}
@@ -23,7 +24,6 @@ const CoursesSplitView = ({ courses }: Props) => {
         handleListClick={(e, course) => setFocusedCourse(course)}
         />
         )}
-      <CourseFocus focusedCourse={focusedCourse} />
     </div>
   );
 };

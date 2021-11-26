@@ -1,11 +1,13 @@
 import { Course } from '@/interfaces/courses';
 import styles from '@/styles/coursesSplitView.module.css';
+import { CourseInfo } from './CourseInfo';
 
 interface Props {
   focusedCourse: Course | null;
 }
 
 export default function CourseFocus({ focusedCourse }: Props) {
+  
   return (
     <div className={styles.focus}>
       <div className={styles.focusheader}>
@@ -16,9 +18,9 @@ export default function CourseFocus({ focusedCourse }: Props) {
           Click on a class to view its info!
         </p>
       ) : (
-        <p>
-          {focusedCourse.title} in the {focusedCourse.subj} department
-        </p>
+        <div>
+          <CourseInfo course={focusedCourse}/>
+        </div>
       )}
     </div>
   );

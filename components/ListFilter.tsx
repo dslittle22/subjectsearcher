@@ -20,8 +20,15 @@ interface Props {
 }
 
 const ListFilter = ({ courses, setFilteredCourses }: Props) => {
-  const [filters, setFilters] = useState<Filters>({});
   const [searchStr, setSearchStr] = useState(getQueryParam('query'));
+  const [filters, setFilters] = useState<Filters>({
+    query: !searchStr
+      ? undefined
+      : (course: Course) =>
+          course.title
+            .toLocaleLowerCase()
+            .includes(getQueryParam('query').toLocaleLowerCase()),
+  });
 
   useEffect(() => {
     setFilteredCourses(courses.filter(course => applyFilters(course, filters)));

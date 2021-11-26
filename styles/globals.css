@@ -33,3 +33,8 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.course-title {
+  font-weight: 600;
+  font-style: italic;
+}

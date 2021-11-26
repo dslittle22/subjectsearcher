@@ -14,10 +14,10 @@ const CoursesList = ({ courses, starredCourses, handleListClick }: Props) => {
   const [filteredCourses, setFilteredCourses] = useState<Course[]>(courses)
 
   return (
-    <div className={styles.listcontainer} >
+    <div className={styles.list_container} >
       <ListFilter courses={courses} setFilteredCourses={setFilteredCourses}/>
       {<ul className={styles.list}>
-          {filteredCourses.map((course) => (
+          {filteredCourses.map((course, idx) => (
         <CourseListItem
           course={course}
           handleListClick={handleListClick}
