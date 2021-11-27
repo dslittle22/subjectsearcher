@@ -14,7 +14,7 @@ export const CourseInfo = ({course}: {course: Course }) => {
     
     return (
       <div>
-        <p className={'course-title'}>
+        <p className='course-title'>
           {course.title} {course.sect !== '0' ? ` (${course.sect})` : ''}
         </p>
 

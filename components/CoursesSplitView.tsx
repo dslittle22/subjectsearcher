@@ -13,10 +13,10 @@ const CoursesSplitView = ({ courses }: Props) => {
   const [focusedCourse, setFocusedCourse] = useState<Course | null>(null);
 
   return (
-    <div className={styles.container}>
+    <div className={'container'}>
       <CourseFocus focusedCourse={focusedCourse} />
       {courses === null ? (
-        <p className={styles.list_container}>Loading courses...</p>
+        <p className='list_container'>Loading courses...</p>
       ) : (
         <CoursesList
         courses={courses}

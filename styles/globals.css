@@ -7,9 +7,6 @@ html {
 
 body {
   height: 100%;
-  /* font-family: Arial, Helvetica, sans-serif; */
-  /* background: ${theme.colors.background}; */
-  /* color: ${theme.colors.text}; */
   letter-spacing: 0.3px;
   font-size: clamp(14px, 1rem + 0.5vw, 18px);
   line-height: 1.5;
@@ -37,4 +34,37 @@ a {
 .course-title {
   font-weight: 600;
   font-style: italic;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "focus list_container";
+}
+
+.list_container {
+    padding: 1rem 1rem;
+    grid-area: list_container;
+    background-color: rgb(179, 179, 179);
+    height: 100vh;
+    display: grid;
+    grid-template-areas: 
+    "filter"
+    "list";
+    grid-template-rows: 200px 1fr;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .container {
+        display: block;
+    }
+    
+    .list_container {
+        min-height: 60vh;
+        height: auto;
+        max-height: 100vh;
+        grid-template-rows: 100px 1fr;
+    }
 }
