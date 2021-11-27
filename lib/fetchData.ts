@@ -8,7 +8,7 @@ function isValidQuery(year: QueryParam, season: QueryParam): boolean {
 }
 
 export async function fetchData(year_s: QueryParam, season: QueryParam) {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NETLIFY || process.env.NODE_ENV !== 'development') {
     const data = require('../dev/data.json'); // 
     return data.courses
   } else {
