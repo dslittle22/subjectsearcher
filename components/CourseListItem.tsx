@@ -1,7 +1,7 @@
-import {MouseEvent} from 'react';
+import {MouseEvent, useState} from 'react';
 import { Course } from '@/interfaces/courses';
 import styles from '@/styles/coursesSplitView.module.css';
-import { formateProfName, formatTime } from '@/lib/processCourseData';
+import { formatProfName, formatTime } from '@/lib/processCourseData';
 
 interface Props {
   course: Course;
@@ -10,20 +10,24 @@ interface Props {
 
 
 export const CourseListItem = ({ course, handleListClick }: Props) => {
- 
+  const [starred, setStarred] = useState(false)
 
+  const handleStarClick = (e: MouseEvent<HTMLElement>) => {
+    console.log('you clicked me!');
+    
+    setStarred(!starred)
+  }
 
   return (
-    <li className={styles.listitem} onClick={e => handleListClick(e, course)}>
+    <li className={styles.listitem} >
       <p className='course-title'>
-        <span className={styles.star}>{`★ `}</span>
-        <span>
+        <span className={`${styles.star} ${starred? styles.starred : ''}`} onClick={handleStarClick}>{`★ `}</span>
+        <span onClick={e => handleListClick(e, course)} className='underlineable'>
         {course.title} {course.sect !== "0" ? ` (${course.sect})` : ''}
-        </span>
-      </p>
-      <p>
-        {course.dept_desc + ' ' + course.num + ', ' + formateProfName(course) + '. '}
+        <br />
+        {course.dept_desc + ' ' + course.num + ', ' + formatProfName(course) + '. '}
         {formatTime(course)}
+        </span>
       </p>
     </li>
   );

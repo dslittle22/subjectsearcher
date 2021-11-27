@@ -1,8 +1,4 @@
 
-.filter {
-    grid-area: filter;
-}
-
 .list {
     overflow-y: scroll;
     list-style-type: none;
@@ -13,7 +9,7 @@
     border: 1px solid black;
 }
 
-.listitem:hover, .copyable:hover {
+.underlineable:hover, .copyable:hover {
     text-decoration: underline;
 }
 
@@ -37,15 +33,12 @@
 
 
 .star {
-  background-color: transparent;
-  border: none;
-  outline: none;
   cursor: pointer;
-  color: rgb(164, 148, 30);
-  text-decoration: none;
+  color: rgb(103, 92, 10);
+  font-size: 25px;
 }
 
-.star:hover {
-  color: rgb(230, 205, 15);
+.star:hover, .star.starred {
+  color: rgb(244, 216, 9);
   text-decoration: none;
 }

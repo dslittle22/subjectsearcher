@@ -1,6 +1,6 @@
 import { Course } from "@/interfaces/courses";
 
-export const formateProfName = (course: Course) => {
+export const formatProfName = (course: Course) => {
     const {firstname, lastname} = course.meetings.classes[0].instructors[0]
     return firstname + ' ' + lastname
 }

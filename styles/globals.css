@@ -33,7 +33,17 @@ a {
 
 input {
   height: 1.5rem;
-  font-size: 18;
+  font-size: 18px;
+  width: 90%;
+  margin: 1rem 0.3rem;
+}
+
+.filter {
+    grid-area: filter;
+}
+
+.filter label {
+  margin: 1rem 0.3rem;
 }
 
 .course-title {
@@ -58,6 +68,15 @@ input {
     "filter"
     "list";
     grid-template-rows: 200px 1fr;
+}
+
+.underlineable:hover, .copyable:hover {
+    text-decoration: underline;
+}
+
+.filter-dropdown {
+  height: 1.5rem;
+  font-size: 18px;
 }
 
 

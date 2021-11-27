@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Course } from '@/interfaces/courses';
 import { Filters } from '@/interfaces/filters';
+import { formatProfName } from './processCourseData';
+
 export const addQueryParam = (key: string, value: string) => {
   const url = new URL(window.location.href);
   url.searchParams.set(key, value);
@@ -25,16 +27,30 @@ export const applyFilters = (course: Course, filters: Filters): boolean => {
 export const udpateQueryFilter = (
   filters: Filters,
   setFilters: Dispatch<SetStateAction<Filters>>,
-  query: string
+  query: string, 
+  dropdownOption: string
 ): void => {
   setFilters({
     ...filters,
     query:
-      query === ''
+      query === '' ||
+      !['title', 'professor', 'subject'].find(v => v === dropdownOption)
         ? undefined
-        : (course: Course) =>
-            course.title
-              .toLocaleLowerCase()
-              .includes(query.toLocaleLowerCase()),
+        : (course: Course) => {
+          let courseAttr = '';
+          switch (dropdownOption) {
+            case "title":
+              courseAttr = course.title.toLocaleLowerCase()
+              break;
+            case "subject":
+              courseAttr = course.subj_desc.toLocaleLowerCase()
+              break;
+            case "professor":
+              courseAttr = formatProfName(course).toLocaleLowerCase()
+            default:
+              break;
+          }
+          return courseAttr.includes(query.toLocaleLowerCase())
+        }
   });
 };
