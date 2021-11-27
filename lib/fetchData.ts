@@ -3,10 +3,10 @@ type QueryParam = string | string[] | undefined;
 
 export async function fetchData(year_s: QueryParam, season: QueryParam) {
   if (!process.env.NETLIFY && process.env.NODE_ENV === 'development') {
-      try {
-        const data = require('../dev/data.json');
-        return data.courses;
-      } catch (error) {}
+    const res = await fetch('http://localhost:5000/courses')
+    const data = await res.json()
+    console.log(data);
+    return data
   }
 
   const yearValid =
