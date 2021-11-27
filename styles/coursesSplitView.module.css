@@ -35,3 +35,17 @@
     text-align: center;
 }
 
+
+.star {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: rgb(164, 148, 30);
+  text-decoration: none;
+}
+
+.star:hover {
+  color: rgb(230, 205, 15);
+  text-decoration: none;
+}

@@ -1,20 +1,13 @@
 import { baseurl, semesterToApiRoute } from '@/lib/dates';
 type QueryParam = string | string[] | undefined;
 
-function isValidQuery(year: QueryParam, season: QueryParam): boolean {
-  const yearValid =
-    typeof year === 'string' && typeof parseInt(year) === 'number';
-  const seasonValid = season === 'spring' || season === 'fall';
-  return yearValid && seasonValid;
-}
-
 export async function fetchData(year_s: QueryParam, season: QueryParam) {
-  // if (!process.env.NETLIFY) {
-    // if (process.env.NODE_ENV === 'development') {
-      // const data = require('../dev/data.json');
-      // return data.courses;
-    // }
-  // }
+  if (!process.env.NETLIFY && process.env.NODE_ENV === 'development') {
+      try {
+        const data = require('../dev/data.json');
+        return data.courses;
+      } catch (error) {}
+  }
 
   const yearValid =
     typeof year_s === 'string' && typeof parseInt(year_s) === 'number';

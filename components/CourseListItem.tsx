@@ -15,7 +15,12 @@ export const CourseListItem = ({ course, handleListClick }: Props) => {
 
   return (
     <li className={styles.listitem} onClick={e => handleListClick(e, course)}>
-      <p className={'course-title'}>{course.title} {course.sect !== "0" ? ` (${course.sect})` : ''}</p>
+      <p className='course-title'>
+        <span className={styles.star}>{`★ `}</span>
+        <span>
+        {course.title} {course.sect !== "0" ? ` (${course.sect})` : ''}
+        </span>
+      </p>
       <p>
         {course.dept_desc + ' ' + course.num + ', ' + formateProfName(course) + '. '}
         {formatTime(course)}
