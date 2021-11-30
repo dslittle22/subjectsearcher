@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div className='container'>
-      <CourseFocus focusedCourse={null} />
+      <CourseFocus focusedCourse={null} semesterDropdown={<></>}/>
       <p className='filter_list'>Loading courses...</p>
     </div>
   );
