@@ -9,11 +9,14 @@ export const addQueryParam = (key: string, value: string) => {
 };
 
 export const getQueryParam = (key: string) => {
+  if (typeof window === "undefined") return '' 
   const url = new URL(window.location.href);
-    return url.searchParams.get(key) || '';
+  return url.searchParams.get(key) || '';
 };
 
 export const applyFilters = (course: Course, filters: Filters): boolean => {
+  console.log('running applyFilters');
+  
   let flag = true;
   for (const [k, fn] of Object.entries(filters)) {
     if (fn) {

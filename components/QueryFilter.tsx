@@ -8,7 +8,6 @@ import {
   getQueryParam,
   getQueryFilterFunction,
 } from '@/lib/filterLogic';
-import { useRouter } from 'next/router';
 import { Course } from '@/interfaces/courses';
 import { QueryDropdown } from '@/interfaces/filters';
 
@@ -20,20 +19,16 @@ interface Props {
 }
 
 const QueryFilter = ({ onFilterChange }: Props) => {
-  const [searchStr, setSearchStr] = useState('');
-  const [queryDropdown, setQueryDropdown] = useState<QueryDropdown>('title');
+  const [searchStr, setSearchStr] = useState(getQueryParam('query'));
+  const [queryDropdown, setQueryDropdown] = useState<QueryDropdown>(() => {
+    const urlDropdown = getQueryParam('queryDropdown')
+    if (urlDropdown !== 'title' && urlDropdown !== 'professor') return 'title'
+    return urlDropdown
+  });
 
-  const router = useRouter()
   useEffect(() => {
-    setSearchStr(getQueryParam('query'));  
-    const urlDropdownOption = getQueryParam('qDropdown') 
-    if (urlDropdownOption !== 'title' && urlDropdownOption !== 'professor') {
-      setQueryDropdown('title');
-      addQueryParam('qDropdown', 'title')
-    } else {
-      setQueryDropdown(urlDropdownOption);
-    }
-  }, [router.isReady])
+    onFilterChange('query', getQueryFilterFunction(searchStr, queryDropdown))
+  }, [])
   
   useEffect(() => {
     onFilterChange('query', getQueryFilterFunction(searchStr, queryDropdown));
@@ -48,7 +43,7 @@ const QueryFilter = ({ onFilterChange }: Props) => {
     const option = e.target.children[
       e.target.selectedIndex
     ] as HTMLOptionElement;
-    addQueryParam('qDropdown', option.value);
+    addQueryParam('queryDropdown', option.value);
     setQueryDropdown(option.value as QueryDropdown);
   };
 
@@ -56,6 +51,7 @@ const QueryFilter = ({ onFilterChange }: Props) => {
     <div>
       <label htmlFor='search'> Search by: </label>
       <select
+        value={queryDropdown}
         onChange={handleDropdownChange}
         className='filter-dropdown'
         name='search'

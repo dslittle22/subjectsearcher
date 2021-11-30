@@ -1,5 +1,6 @@
 import {
   useState,
+  useEffect,
   Dispatch,
   SetStateAction,
 } from 'react';
@@ -13,10 +14,18 @@ interface Props {
   setFilteredCourses: Dispatch<SetStateAction<Course[]>>;
 }
 
+
+
 const Filters = ({ courses, setFilteredCourses }: Props) => {
   const [filters, setFilters] = useState<Filters>({})
 
+  useEffect(() => {
+    setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
+  }, [courses])
+
   const onFilterChange = (filterKey: string, filterFunction?: (course: Course) => boolean) => {
+    console.log('running onFilterChange');
+    
     setFilteredCourses(courses.filter(course => applyFilters(course, {...filters, [filterKey]: filterFunction})));
     setFilters({...filters, [filterKey]: filterFunction})
   }

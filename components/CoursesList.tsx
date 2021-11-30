@@ -1,6 +1,5 @@
-import { useState, MouseEvent, Dispatch, SetStateAction} from 'react';
+import { Dispatch, SetStateAction} from 'react';
 import { CourseListItem } from '@/components/CourseListItem';
-import Filters from '@/components/Filters';
 import { Course } from '@/interfaces/courses';
 import styles from '@/styles/coursesSplitView.module.css';
 
@@ -11,7 +10,7 @@ interface Props {
 
 const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
 
-  return (
+  return filteredCourses.length ? (
       <ul className={styles.list}>
           {filteredCourses.map((course, idx) => (
         <CourseListItem
@@ -21,7 +20,7 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
         />
       ))}
         </ul>
-  );
+  ) : <div>Accessing Bowdoin's very slow database...</div>
 };
 
 export default CoursesList;
