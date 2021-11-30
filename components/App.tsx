@@ -6,6 +6,7 @@ import { fetchData } from '@/lib/fetchData';
 import CourseFocus from '@/components/CourseFocus';
 import CoursesList from '@/components/CoursesList';
 import Filters from '@/components/Filters';
+import SemesterDropdown from './SemesterDropdown';
 
 function App({}) {
   const [courses, setCourses] = useState<Course[]>([])
@@ -32,7 +33,15 @@ function App({}) {
     tryToFetch();
   }, [router, router.isReady]);
 
-  const focus = <CourseFocus focusedCourse={focusedCourse}/>
+  const onSemesterDropdownChange = (semesterRoute: string) => {
+    setCourses([])
+    setFilteredCourses([])
+    setFocusedCourse(null)
+    router.push(semesterRoute)
+  }
+
+  const semesterDropdown = <SemesterDropdown onSemesterDropdownChange={onSemesterDropdownChange} />
+  const focus = <CourseFocus focusedCourse={focusedCourse} semesterDropdown={semesterDropdown}/>
   const filters = <Filters courses={courses} setFilteredCourses={setFilteredCourses}/>
   const list = courses.length < 1? (<p className='filter_list'>Loading courses...</p>) : (
     <CoursesList filteredCourses={filteredCourses} setFocusedCourse={setFocusedCourse}/>

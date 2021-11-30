@@ -18,8 +18,10 @@ export async function fetchData(year_s: QueryParam, season: QueryParam) {
   try {
     const response = await fetch(url);
     const data = await response.json();
+    
     return Array.isArray(data.courses) ? data.courses : -1;
-  } catch {
+  } catch(e) {
+    console.log(e);
     return -1;
   }
 }

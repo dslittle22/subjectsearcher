@@ -27,10 +27,6 @@ const QueryFilter = ({ onFilterChange }: Props) => {
   });
 
   useEffect(() => {
-    onFilterChange('query', getQueryFilterFunction(searchStr, queryDropdown))
-  }, [])
-  
-  useEffect(() => {
     onFilterChange('query', getQueryFilterFunction(searchStr, queryDropdown));
   }, [searchStr, queryDropdown]);
 

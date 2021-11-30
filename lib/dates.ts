@@ -15,11 +15,13 @@ export const findNextSemesterRoute = () => {
 
 export const listPastSemesters = () => {
   const sems: Semester[] = []
-  const {year: currentYear, season: currentSeason} = findCurrentSemester()
-  let nextSem: Semester = {year: 2013, season: 'fall'};
-  while (!(nextSem.year === currentYear && nextSem.season === currentSeason)) {
-    sems.push(nextSem)
-    nextSem = incrementSemester(nextSem)
+  const lastYear = 2013
+  const lastSeason = 'fall'
+  // const {year: currentYear, season: currentSeason} = findCurrentSemester()
+  let sem: Semester = incrementSemester(findCurrentSemester());
+  while (!(sem.year === lastYear && sem.season === lastSeason)) {
+    sems.push(sem)
+    sem = decrementSemester(sem)
   }
   return sems
 }

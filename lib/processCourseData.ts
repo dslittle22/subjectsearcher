@@ -2,12 +2,15 @@ import { Course } from "@/interfaces/courses";
 import { type } from "os";
 
 export const formatProfName = (course: Course) => {
+    if (typeof course.meetings.classes[0] === 'undefined') return 'Unknown professor' 
     if (typeof course.meetings.classes[0].instructors[0] === 'undefined') return 'Unknown' 
+
     const {firstname, lastname} = course.meetings.classes[0].instructors[0]
     return firstname + ' ' + lastname
 }
 
 export const formatTime = (course: Course) => {
+    if (typeof course.meetings.classes[0] === "undefined") return 'Unknown meeting time'
     const timeStr = course.meetings.classes[0].time
     if (timeStr.includes("TBA")) return "meetings TBA";
 
