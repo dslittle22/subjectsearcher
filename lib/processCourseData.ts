@@ -21,17 +21,8 @@ export const formatTime = (course: Course) => {
 
     const endHour = Number(end.substr(0, 2))
     const endNon24Hour = (endHour + 11) % 12 + 1
-    const endMinute = end.substr(2) == '00' ? '' : ':' + end.substr(2) //Number(end.substr(2))
-    let suffix = 'PM';
-    if (endHour < 12 || (endHour == 12 && !endMinute)) {
-        suffix = 'AM'
-    }
-    // if (endHour < 12 || (endHour == 12 && endMinute == 0)) {
-    //     formatted += end.substr(0, 2)
-    // } else {
-    //   formatted += String((endHour + 11) % 12 + 1)
-    //   suffix = 'PM'
-    // }
+    const endMinute = end.substr(2) == '00' ? '' : ':' + end.substr(2) 
+    let suffix = endHour < 12 ? 'PM' : 'AM';
     formatted += endNon24Hour + endMinute + suffix;
     return formatted
 }

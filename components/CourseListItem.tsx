@@ -5,7 +5,7 @@ import { formatProfName, formatTime } from '@/lib/processCourseData';
 
 interface Props {
   course: Course;
-  handleListClick: (e: MouseEvent<HTMLElement>, course: Course) => void;
+  handleListClick: (course: Course) => void;
 }
 
 
@@ -13,8 +13,6 @@ export const CourseListItem = ({ course, handleListClick }: Props) => {
   const [starred, setStarred] = useState(false)
 
   const handleStarClick = (e: MouseEvent<HTMLElement>) => {
-    console.log('you clicked me!');
-    
     setStarred(!starred)
   }
 
@@ -22,7 +20,7 @@ export const CourseListItem = ({ course, handleListClick }: Props) => {
     <li className={styles.listitem} >
       <p className='course-title'>
         <span className={`${styles.star} ${starred? styles.starred : ''}`} onClick={handleStarClick}>{`★ `}</span>
-        <span onClick={e => handleListClick(e, course)} className='underlineable'>
+        <span onClick={() => handleListClick(course)} className='underlineable'>
         {course.title} {course.sect !== "0" ? ` (${course.sect})` : ''}
         <br />
         {course.dept_desc + ' ' + course.num + ', ' + formatProfName(course) + '. '}

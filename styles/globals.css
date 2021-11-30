@@ -1,3 +1,4 @@
+/* adsf */
 #__next {
   min-height: 100%;
 }
@@ -38,29 +39,26 @@ input {
   margin: 1rem 0.3rem;
 }
 
-.filter {
-    grid-area: filter;
+/* Components */
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "focus filter_list";
 }
 
-.filter label {
-  margin: 1rem 0.3rem;
-}
+/* List of courses */
 
 .course-title {
   font-weight: 600;
   font-style: italic;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-        "focus list_container";
-}
 
-.list_container {
+.filter_list {
     padding: 1rem 1rem;
-    grid-area: list_container;
+    grid-area: filter_list;
     background-color: rgb(179, 179, 179);
     height: 100vh;
     display: grid;
@@ -74,6 +72,16 @@ input {
     text-decoration: underline;
 }
 
+
+
+.filter {
+  grid-area: filter;
+}
+
+.filter label {
+margin: 1rem 0.3rem;
+}
+
 .filter-dropdown {
   height: 1.5rem;
   font-size: 18px;
@@ -85,7 +93,7 @@ input {
         display: block;
     }
     
-    .list_container {
+    .filter_list {
         min-height: 60vh;
         height: auto;
         max-height: 80vh;

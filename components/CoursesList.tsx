@@ -1,32 +1,26 @@
-import { useState, MouseEvent} from 'react';
+import { useState, MouseEvent, Dispatch, SetStateAction} from 'react';
 import { CourseListItem } from '@/components/CourseListItem';
-import ListFilter from '@/components/ListFilter';
+import Filters from '@/components/Filters';
 import { Course } from '@/interfaces/courses';
 import styles from '@/styles/coursesSplitView.module.css';
 
 interface Props {
-  courses: Course[];
-  starredCourses: Course[];
-  handleListClick: (e: MouseEvent<HTMLElement>, course: Course) => void;
+  filteredCourses: Course[];
+  setFocusedCourse:  Dispatch<SetStateAction<Course | null>>
 }
 
-const CoursesList = ({ courses, starredCourses, handleListClick }: Props) => {
-  const [filteredCourses, setFilteredCourses] = useState<Course[]>(courses)
+const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
 
   return (
-    <div className='list_container'>
-      <ListFilter courses={courses} setFilteredCourses={setFilteredCourses}/>
-      {<ul className={styles.list}>
+      <ul className={styles.list}>
           {filteredCourses.map((course, idx) => (
         <CourseListItem
           course={course}
-          handleListClick={handleListClick}
+          handleListClick={(course: Course) => setFocusedCourse(course)}
           key={course.crn + course.subj}
         />
       ))}
         </ul>
-      }
-    </div>
   );
 };
 

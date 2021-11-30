@@ -1,7 +1,6 @@
 import { findNextSemesterRoute } from '@/lib/dates';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styles from '@/styles/coursesSplitView.module.css';
 import CourseFocus from '@/components/CourseFocus';
 
 const Home = () => {
@@ -16,7 +15,7 @@ const Home = () => {
   return (
     <div className='container'>
       <CourseFocus focusedCourse={null} />
-      <p className='list_container'>Loading courses...</p>
+      <p className='filter_list'>Loading courses...</p>
     </div>
   );
 };
