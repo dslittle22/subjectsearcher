@@ -15,8 +15,6 @@ export const getQueryParam = (key: string) => {
 };
 
 export const applyFilters = (course: Course, filters: Filters): boolean => {
-  console.log('running applyFilters');
-  
   let flag = true;
   for (const [k, fn] of Object.entries(filters)) {
     if (fn) {

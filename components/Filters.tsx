@@ -21,11 +21,9 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
 
   useEffect(() => {
     setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
-  }, [courses])
+  }, [courses, filters, setFilteredCourses])
 
   const onFilterChange = (filterKey: string, filterFunction?: (course: Course) => boolean) => {
-    console.log('running onFilterChange');
-    
     setFilteredCourses(courses.filter(course => applyFilters(course, {...filters, [filterKey]: filterFunction})));
     setFilters({...filters, [filterKey]: filterFunction})
   }

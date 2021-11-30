@@ -34,7 +34,7 @@ function App({}) {
 
   const focus = <CourseFocus focusedCourse={focusedCourse}/>
   const filters = <Filters courses={courses} setFilteredCourses={setFilteredCourses}/>
-  const list = courses === null ? (<p className='filter_list'>Loading courses...</p>) : (
+  const list = courses.length < 1? (<p className='filter_list'>Loading courses...</p>) : (
     <CoursesList filteredCourses={filteredCourses} setFocusedCourse={setFocusedCourse}/>
   )
 

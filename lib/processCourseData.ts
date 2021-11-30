@@ -1,6 +1,8 @@
 import { Course } from "@/interfaces/courses";
+import { type } from "os";
 
 export const formatProfName = (course: Course) => {
+    if (typeof course.meetings.classes[0].instructors[0] === 'undefined') return 'Unknown' 
     const {firstname, lastname} = course.meetings.classes[0].instructors[0]
     return firstname + ' ' + lastname
 }
@@ -22,7 +24,7 @@ export const formatTime = (course: Course) => {
     const endHour = Number(end.substr(0, 2))
     const endNon24Hour = (endHour + 11) % 12 + 1
     const endMinute = end.substr(2) == '00' ? '' : ':' + end.substr(2) 
-    let suffix = endHour < 12 ? 'PM' : 'AM';
+    let suffix = endHour < 12 ? 'AM' : 'PM';
     formatted += endNon24Hour + endMinute + suffix;
     return formatted
 }

@@ -20,7 +20,7 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
         />
       ))}
         </ul>
-  ) : <div>Accessing Bowdoin's very slow database...</div>
+  ) : <div>No courses found. :(</div>
 };
 
 export default CoursesList;

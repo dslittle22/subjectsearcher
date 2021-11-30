@@ -23,7 +23,7 @@ export const CourseListItem = ({ course, handleListClick }: Props) => {
         <span onClick={() => handleListClick(course)} className='underlineable'>
         {course.title} {course.sect !== "0" ? ` (${course.sect})` : ''}
         <br />
-        {course.dept_desc + ' ' + course.num + ', ' + formatProfName(course) + '. '}
+        {course.subj_desc + ' ' + course.num + ', ' + formatProfName(course) + '. '}
         {formatTime(course)}
         </span>
       </p>

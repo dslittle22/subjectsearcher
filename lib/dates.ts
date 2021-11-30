@@ -13,10 +13,27 @@ export const findNextSemesterRoute = () => {
   return semesterToRoute(incrementSemester(findCurrentSemester()));
 };
 
+export const listPastSemesters = () => {
+  const sems: Semester[] = []
+  const {year: currentYear, season: currentSeason} = findCurrentSemester()
+  let nextSem: Semester = {year: 2013, season: 'fall'};
+  while (!(nextSem.year === currentYear && nextSem.season === currentSeason)) {
+    sems.push(nextSem)
+    nextSem = incrementSemester(nextSem)
+  }
+  return sems
+}
+
 export const incrementSemester = (query: Semester): Semester => {
   return query.season === 'fall'
     ? { year: query.year + 1, season: 'spring' }
     : { year: query.year, season: 'fall' };
+};
+
+export const decrementSemester = (query: Semester): Semester => {
+  return query.season === 'fall'
+  ? { year: query.year, season: 'spring' }
+  : { year: query.year - 1, season: 'fall' }
 };
 
 export const semesterToApiRoute = (query: Semester): string => {
@@ -27,6 +44,18 @@ export const semesterToApiRoute = (query: Semester): string => {
   }
 };
 
-const semesterToRoute = (query: Semester): string => {
+export const apiRouteToSemester = (apiRoute: string): string => {
+  let year, season: string 
+  if (apiRoute.substr(4) === '10') {
+    season = 'Fall'
+    year = String(parseInt(apiRoute.substr(0, 4)) - 1)
+  } else {
+    season = 'Spring'
+    year = String(parseInt(apiRoute.substr(0, 4)))
+  }
+  return season + ' ' + year
+}
+
+export const semesterToRoute = (query: Semester): string => {
   return `/${query.year}/${query.season}`;
 };

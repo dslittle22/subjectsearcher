@@ -73,7 +73,8 @@ export interface Rules {
   prereq:       string;
   coreq:        string;
   equivalent:   Equivalent[];
-  springpref:   string;
+  springpref:   string | undefined;
+  fallpref:   string | undefined;
   concurr_preq: string;
   priority:     string;
 }

@@ -7,10 +7,9 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (router.isReady) {
+    if (!router.isReady) return
       router.push(findNextSemesterRoute());
-    }
-  }, [router]);
+  }, [router, router.isReady]);
 
   return (
     <div className='container'>
