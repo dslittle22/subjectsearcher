@@ -17,9 +17,9 @@ export const CourseListItem = ({ course, handleListClick }: Props) => {
   }
 
   return (
-    <li className={styles.listitem} >
+    <li className='course-listitem' >
       <p className='course-title'>
-        <span className={`${styles.star} ${starred? styles.starred : ''}`} onClick={handleStarClick}>{`★ `}</span>
+        <span className={`star ${starred? 'starred' : ''}`} onClick={handleStarClick}>{`★ `}</span>
         <span onClick={() => handleListClick(course)} className='underlineable'>
         {course.title} {course.sect !== "0" ? ` (${course.sect})` : ''}
         <br />

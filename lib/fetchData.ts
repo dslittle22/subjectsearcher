@@ -2,15 +2,12 @@ import { baseurl, semesterToApiRoute } from '@/lib/dates';
 type QueryParam = string | string[] | undefined;
 
 export async function fetchData(year_s: QueryParam, season: QueryParam) {
-  // if (!process.env.NETLIFY && process.env.NODE_ENV === 'development') {
+  if (!process.env.NETLIFY && process.env.NODE_ENV === 'development') {
     // const res = await fetch('http://localhost:5000/courses')
     // return await res.json()
-  // }
-  console.log('fetching!');
-  console.log(year_s, season);
+    console.log('fetching!', year_s, season);
+  }
   
-  
-
   const yearValid =
     typeof year_s === 'string' && typeof parseInt(year_s) === 'number';
   const seasonValid = season === 'spring' || season === 'fall';

@@ -6,17 +6,17 @@ export interface Course {
   crn:          string;
   subj:         string;
   subj_desc:    string;
-  dept:         string;
-  dept_desc:    string;
+  dept?:         string;
+  dept_desc?:    string;
   sect:         string;
   num:          string;
   title:        string;
-  term:         string;
+  term?:         string;
   credit:       string;
-  originsubj:   string;
-  originnum:    string;
-  comment:      string;
-  crosslisting: Crosslisting[];
+  originsubj?:   string;
+  originnum?:    string;
+  comment?:      string;
+  crosslisting?: Crosslisting[];
   lab:          string;
   distrib:      Curricular[];
   designation:  Curricular[];
@@ -67,12 +67,12 @@ export interface Prefm {
 
 export interface Rules {
   permission:   string;
-  mmrest:       string;
+  mmrest?:       string;
   standingrest: string;
   exclusion:    any[];
   prereq:       string;
-  coreq:        string;
-  equivalent:   Equivalent[];
+  coreq?:        string;
+  equivalent?:   Equivalent[];
   springpref:   string | undefined;
   fallpref:   string | undefined;
   concurr_preq: string;

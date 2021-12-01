@@ -18,6 +18,18 @@ export const CourseInfo = ({ course }: { course: Course }) => {
     }
   };
 
+  const formatRequirements = () => {
+    const stuff = []
+    for (const arr of [course.distrib, course.designation, course.curricular]) {
+      if (arr) {
+        for (const obj of arr) {
+          stuff.push(obj.id)
+        }
+      }
+    }
+    return <span>{stuff.join(', ')}</span>
+  }
+
   const formatPreference = (): JSX.Element => {
     const pref: string = course.rules.springpref
       ? course.rules.springpref
@@ -68,18 +80,19 @@ export const CourseInfo = ({ course }: { course: Course }) => {
           </p>
         </div>
         <div className={styles.info_reg}>
-          <p>Term: {apiRouteToSemester(course.term)}</p>
           <p>Credits: {course.credit.substr(0, 4)}</p>
           {course.rules.prereq && <p>Prerequisites: {course.rules.prereq}</p>}
+          Distribution: {formatRequirements()}
         </div>
+        
+      </div>
+      <div className={styles.right}>
+        <p className={styles.info_desc}>{course.description}</p>
         <div className={styles.info_slots}>
           <div>Capacity: {course.seats.capacity}</div>
           <div>Open spots: {course.seats.remaining}</div>
           <div>Pending requests: {course.seats.pending}</div>
         </div>
-      </div>
-      <div className={styles.right}>
-        <p className={styles.info_desc}>{course.description}</p>
       </div>
     </div>
   );

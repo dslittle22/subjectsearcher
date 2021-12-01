@@ -15,7 +15,7 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
   }, [filteredCourses])
 
   return filteredCourses.length ? (
-      <ul className={styles.list}>
+      <ul className='courses-list'>
           {filteredCourses.map((course, idx) => (
         <CourseListItem
           course={course}

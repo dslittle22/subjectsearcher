@@ -9,10 +9,11 @@ interface Props {
 
 export default function CourseFocus({ focusedCourse, semesterDropdown }: Props) {
   return (
-    <div className={styles.focus}>
-      <div className={styles.focusheader}>
+    <div className='focus'>
+      <div className='focus-header'>
+        <div className='header-left'> {semesterDropdown} </div>
         <h1>Subject Searcher</h1>
-        {semesterDropdown}
+        <div className='header-right'> {' '}</div>
       </div>
       {focusedCourse === null ? (
         <p>

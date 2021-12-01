@@ -31,7 +31,7 @@
     padding: 1rem;
 }
 
-.left > * {
+.left > * , .right > * {
     border: black 1px solid;
     padding: 0.5rem;
 }

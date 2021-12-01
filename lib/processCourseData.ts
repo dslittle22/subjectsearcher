@@ -1,5 +1,6 @@
 import { Course } from "@/interfaces/courses";
 import { type } from "os";
+import { resourceLimits } from "worker_threads";
 
 export const formatProfName = (course: Course) => {
     if (typeof course.meetings.classes[0] === 'undefined') return 'Unknown professor' 
@@ -30,4 +31,21 @@ export const formatTime = (course: Course) => {
     let suffix = endHour < 12 ? 'AM' : 'PM';
     formatted += endNon24Hour + endMinute + suffix;
     return formatted
+}
+
+export const trimCouse = (course: Course) => {
+    delete course.comment
+    delete course.dept
+    delete course.dept_desc
+    delete course.term
+    delete course.originnum
+    delete course.originsubj
+    delete course.crosslisting
+    delete course.rules.equivalent
+    delete course.rules.mmrest
+    delete course.rules.coreq
+    delete course.prefmajors
+    delete course.prefminors
+    delete course.addlmajmin
+    return course
 }

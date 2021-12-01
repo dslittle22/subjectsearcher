@@ -43,10 +43,10 @@ const SemesterDropdown = ({onSemesterDropdownChange}: Props) => {
   }, [router, router.isReady]);
 
   return currentSemester === null ? 
-  (<div>Semester: loading...</div>) : 
+  (<div className='sem-dropdown'>Semester: loading...</div>) : 
   (
-    <>
-    <label htmlFor='semester'>Semester: </label>
+    <div className='sem-dropdown'>
+    <label htmlFor='semester'>Semester: </label> <br />
     <select
       name='semester'
       id='semester'
@@ -59,7 +59,7 @@ const SemesterDropdown = ({onSemesterDropdownChange}: Props) => {
         </option>
       ))}
     </select>
-  </>
+  </div>
   );
 };
 

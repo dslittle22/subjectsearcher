@@ -7,9 +7,9 @@ html {
 
 body {
   height: 100%;
-  letter-spacing: 0.3px;
-  font-size: clamp(14px, 1rem + 0.5vw, 18px);
-  line-height: 1.5;
+  letter-spacing: 0.2px;
+  font-size: 16px;
+  line-height: 1.4;
 
   height: 100%;
   padding: 0;
@@ -33,7 +33,7 @@ a {
 
 input {
   height: 1.5rem;
-  font-size: 18px;
+  font-size: 16px;
   width: 90%;
   margin: 1rem 0.3rem;
 }
@@ -46,14 +46,49 @@ input {
     grid-template-areas: 
         "focus filter_list";
 }
+ 
+/* Focus  */
+.focus {
+    padding: 1rem;
+    min-height: 40vh;
+    grid-area: focus;
+}
+
+.focus-header {
+    display: flex;
+}
+.header-left, .header-right{
+  flex: 1;
+}
 
 /* List of courses */
 
+.courses-list {
+    overflow-y: scroll;
+    list-style-type: none;
+    margin: 10px;
+    margin-bottom: 0px;
+}
+   
 .course-title {
   font-weight: 600;
   font-style: italic;
 }
 
+
+.course-listitem {
+    padding: 0.75rem 0.25rem;
+    border: 1px solid black;
+}
+
+
+.course-listitem:nth-of-type(even){
+    background-color: rgb(230, 230, 230);
+}
+
+.underlineable:hover, .copyable:hover {
+    text-decoration: underline;
+}
 
 .filter_list {
     padding: 1rem 1rem;
@@ -86,9 +121,21 @@ margin: 1rem 0.3rem;
     color:rgb(43, 145, 46)
 }
 
+
+.star {
+  cursor: pointer;
+  color: rgb(103, 92, 10);
+  font-size: 25px;
+}
+
+.star:hover, .star.starred {
+  color: rgb(244, 216, 9);
+  text-decoration: none;
+}
+
 select {
-  height: 1.5rem;
-  font-size: 18px;
+  height: 1.25rem;
+  font-size: 16px;
 }
 
 
@@ -102,5 +149,8 @@ select {
         height: auto;
         max-height: 80vh;
         grid-template-rows: 100px 1fr;
+    }
+    .header-right {
+      flex: 0
     }
 }

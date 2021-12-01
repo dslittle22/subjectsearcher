@@ -7,6 +7,7 @@ import CourseFocus from '@/components/CourseFocus';
 import CoursesList from '@/components/CoursesList';
 import Filters from '@/components/Filters';
 import SemesterDropdown from './SemesterDropdown';
+import { trimCouse } from '@/lib/processCourseData';
 
 function App({}) {
   const [courses, setCourses] = useState<Course[]>([])
@@ -19,15 +20,13 @@ function App({}) {
 
     const tryToFetch = async () => {
       const { year, season } = router.query;
-      // console.log('fetching!');
-      
       const courses = await fetchData(year, season);
       if (courses === false) {
         router.push('/');
       } else if (courses === -1) {
         alert("uh oh, couldn't complete request");
       } else {
-        setCourses(courses);
+        setCourses(courses.map((course: Course) => trimCouse(course)));
         setFilteredCourses(courses)
       }
     };
