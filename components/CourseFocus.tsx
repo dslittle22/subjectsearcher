@@ -16,12 +16,7 @@ export default function CourseFocus({ focusedCourse, semesterDropdown }: Props) 
         <div className='header-right'> {' '}</div>
       </div>
       {focusedCourse === null ? (
-        <p>
-          {
-            "Welcome to SubjectSearcher, a replacement for Bowdoin's ClassFinder.\
-            Click on a class to view its info!"
-          }
-        </p>
+        <p>Loading info...</p>
       ) : (
           <CourseInfo course={focusedCourse} />
       )}

@@ -49,13 +49,17 @@ input {
  
 /* Focus  */
 .focus {
-    padding: 1rem;
     min-height: 40vh;
     grid-area: focus;
 }
 
 .focus-header {
     display: flex;
+    background-color: rgb(179, 179, 179);
+    padding: 1rem;
+    border-radius: 0 0 10px 0;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
 }
 .header-left, .header-right{
   flex: 1;
@@ -68,22 +72,27 @@ input {
     list-style-type: none;
     margin: 10px;
     margin-bottom: 0px;
-}
-   
-.course-title {
-  font-weight: 600;
-  font-style: italic;
+    box-shadow: 0px 0px 10px 2px #000000;
+    position: relative;  
+    z-index: 10;
+    
+  }
+  
+  .course-title {
+    font-weight: 600;
+    font-style: italic;
 }
 
 
 .course-listitem {
-    padding: 0.75rem 0.25rem;
-    border: 1px solid black;
+  padding: 0.75rem 0.25rem;
+  border-top: 1px solid black;
 }
 
 
+
 .course-listitem:nth-of-type(even){
-    background-color: rgb(230, 230, 230);
+  background-color: rgb(230, 230, 230);
 }
 
 .underlineable:hover, .copyable:hover {
@@ -99,7 +108,7 @@ input {
     grid-template-areas: 
     "filter"
     "list";
-    grid-template-rows: 200px 1fr;
+    grid-template-rows: 100px 1fr;
 }
 
 .underlineable:hover, .copyable:hover {

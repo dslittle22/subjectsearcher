@@ -1,4 +1,5 @@
 .course_info {
+    margin: 1rem;
     display: grid;
     gap: 1rem;
     grid-template-areas: 
