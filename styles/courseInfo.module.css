@@ -1,0 +1,37 @@
+.course_info {
+    display: grid;
+    gap: 1rem;
+    grid-template-areas: 
+    "top top"
+    "left right";
+    grid-template-columns: 2fr 3fr;
+}
+
+.info_top {
+    text-align: center;
+    grid-area: top;
+}
+
+.right {
+    grid-area: right;
+}
+
+.left {
+    grid-area: left;
+}
+
+.info_desc {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.left, .right {
+    background-color: rgb(179, 179, 179);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.left > * {
+    border: black 1px solid;
+    padding: 0.5rem;
+}

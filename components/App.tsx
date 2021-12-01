@@ -19,6 +19,8 @@ function App({}) {
 
     const tryToFetch = async () => {
       const { year, season } = router.query;
+      // console.log('fetching!');
+      
       const courses = await fetchData(year, season);
       if (courses === false) {
         router.push('/');

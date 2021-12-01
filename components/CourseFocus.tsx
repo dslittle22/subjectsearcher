@@ -22,9 +22,7 @@ export default function CourseFocus({ focusedCourse, semesterDropdown }: Props) 
           }
         </p>
       ) : (
-        <div>
           <CourseInfo course={focusedCourse} />
-        </div>
       )}
     </div>
   );

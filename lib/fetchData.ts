@@ -6,6 +6,10 @@ export async function fetchData(year_s: QueryParam, season: QueryParam) {
     // const res = await fetch('http://localhost:5000/courses')
     // return await res.json()
   // }
+  console.log('fetching!');
+  console.log(year_s, season);
+  
+  
 
   const yearValid =
     typeof year_s === 'string' && typeof parseInt(year_s) === 'number';
