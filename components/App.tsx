@@ -7,7 +7,7 @@ import CourseFocus from '@/components/CourseFocus';
 import CoursesList from '@/components/CoursesList';
 import Filters from '@/components/Filters';
 import SemesterDropdown from './SemesterDropdown';
-import { trimCouse } from '@/lib/processCourseData';
+import { trimCourse } from '@/lib/processCourseData';
 
 function App({}) {
   const [courses, setCourses] = useState<Course[]>([])
@@ -26,7 +26,7 @@ function App({}) {
       } else if (courses === -1) {
         alert("uh oh, couldn't complete request");
       } else {
-        setCourses(courses.map((course: Course) => trimCouse(course)));
+        setCourses(courses.map((course: Course) => trimCourse(course)));
         setFilteredCourses(courses)
       }
     };

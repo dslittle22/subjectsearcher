@@ -11,7 +11,7 @@ export interface Course {
   sect:         string;
   num:          string;
   title:        string;
-  term?:         string;
+  term:         string;
   credit:       string;
   originsubj?:   string;
   originnum?:    string;

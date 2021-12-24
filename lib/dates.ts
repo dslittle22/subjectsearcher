@@ -4,11 +4,17 @@ export const baseurl = 'https://apphub.bowdoin.edu/classfinder/rs/courses/';
 export const findCurrentSemester = (): Semester => {
   let now = new Date();
   let [year, month] = [now.getFullYear(), now.getMonth()];
-  return {
+
+  const semester: Semester = {
     year,
     season: month > 4 ? 'fall' : 'spring',
-  };
+  }
+
+  // if (fetch(increment(semester)) is an array, return increment(semester))
+  // else
+ return semester
 };
+
 export const findNextSemesterRoute = () => {
   return semesterToRoute(incrementSemester(findCurrentSemester()));
 };
@@ -17,7 +23,6 @@ export const listPastSemesters = () => {
   const sems: Semester[] = []
   const lastYear = 2013
   const lastSeason = 'fall'
-  // const {year: currentYear, season: currentSeason} = findCurrentSemester()
   let sem: Semester = incrementSemester(findCurrentSemester());
   while (!(sem.year === lastYear && sem.season === lastSeason)) {
     sems.push(sem)

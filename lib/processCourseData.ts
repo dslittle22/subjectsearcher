@@ -21,23 +21,22 @@ export const formatTime = (course: Course) => {
     formatted += days.split('').map(l => l.replace("R", "TH")).join('/')
     formatted += ', '
 
-    const startNon24Hour = String((Number(start.substr(0, 2)) + 11) % 12 + 1)
-    const startMinute = start.substr(2) == '00' ? '' : ':' + start.substr(2)
+    const startNon24Hour = String((Number(start.substring(0, 2)) + 11) % 12 + 1)
+    const startMinute = start.substring(2) == '00' ? '' : ':' + start.substring(2)
     formatted += startNon24Hour + startMinute + '-'
 
-    const endHour = Number(end.substr(0, 2))
+    const endHour = Number(end.substring(0, 2))
     const endNon24Hour = (endHour + 11) % 12 + 1
-    const endMinute = end.substr(2) == '00' ? '' : ':' + end.substr(2) 
-    let suffix = endHour < 12 ? 'AM' : 'PM';
+    const endMinute = end.substring(2) == '00' ? '' : ':' + end.substring(2) 
+    let suffix = endHour < 12 || end == '2400' ? 'AM' : 'PM';
     formatted += endNon24Hour + endMinute + suffix;
     return formatted
 }
 
-export const trimCouse = (course: Course) => {
+export const trimCourse = (course: Course) => {
     delete course.comment
     delete course.dept
     delete course.dept_desc
-    delete course.term
     delete course.originnum
     delete course.originsubj
     delete course.crosslisting
