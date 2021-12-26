@@ -9,7 +9,7 @@ import Filters from '@/components/Filters';
 import SemesterDropdown from './SemesterDropdown';
 import { trimCourse } from '@/lib/processCourseData';
 
-function App({}) {
+const App = () => {
   const [courses, setCourses] = useState<Course[]>([])
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([])
   const [focusedCourse, setFocusedCourse] = useState<Course | null>(null)

@@ -46,6 +46,12 @@ export const trimCourse = (course: Course) => {
     delete course.prefmajors
     delete course.prefminors
     delete course.addlmajmin
-    course.allprofs = course.meetings.classes.map(a => a.instructors.map(instructor => instructor.firstname + ' ' + instructor.lastname).join(', ')).join(', ')
+    const profNames = new Set()
+    course.meetings.classes.forEach(class_ => {
+      class_.instructors.forEach(instructor => {
+        profNames.add(instructor.firstname + ' ' + instructor.lastname)
+      })
+    })
+    course.allprofs = Array.from(profNames).join(', ')
     return course
 }

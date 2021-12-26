@@ -31,10 +31,20 @@ export const getQueryFilterFunction = (searchStr: string, attr: keyof Course) =>
       };
 }
 
-export const getMultiSelectFilterFunction = (selected: string[], attr: keyof Course) => {
-  return selected.length === 0
-  ? undefined
-  : (course: Course) => {
+export const getMultiSelectFilterFunction = (selected: string[], attr: keyof Course, filterKey: string) => {
+  if (selected.length === 0) return undefined
+
+  if (filterKey === 'professor') {
+    return (course: Course ) => {
+      for (let i = 0; i < selected.length; i++) {
+        const name = selected[i];
+        if ((course[attr] as string).includes(name)) return true;
+      }
+      return false;
+    }
+  } else {
+return (course: Course) => {
       return selected.includes(course[attr] as string);
     };
+  } 
 }

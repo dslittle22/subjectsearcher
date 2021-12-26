@@ -46,6 +46,12 @@ select {
   height: 2rem;
 }
 
+
+li {
+  list-style-type: none; 
+}
+
+
 /* Components */
 
 .container {
@@ -73,24 +79,49 @@ select {
   flex: 1;
 }
 
-/* List of courses */
 
-li {
-  list-style-type: none; 
+/* Filter */
+
+.filter_list {
+  padding: 1rem;
+  padding-bottom: 0.5rem;
+  grid-area: filter_list;
+  background-color: rgb(179, 179, 179);
+  height: 100vh;
+  display: grid;
+  grid-template-areas: 
+  "filter"
+  "list";
+  grid-template-rows: min-content min-content 1fr;
 }
 
+/* filter area, above list of courses */
+
+.filter {
+grid-area: filter;
+}
+
+.filter label {
+margin: 1rem 0.3rem;
+}
+
+.center-button {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* List of courses */
+
 .courses-list {
-    overflow-y: scroll;
-    list-style-type: none;
-    margin: 10px;
-    margin-bottom: 0px;
-    box-shadow: 0px 0px 10px 2px #000000;
-    position: relative;  
-    z-index: 10;
-    
-  }
+  overflow-y: scroll;
+  margin: 7px;
+  box-shadow: 0px 0px 7px 2px #000000;
+  position: relative;
+  z-index: 10;
+}
   
-  .course-title {
+.course-title {
     font-weight: 600;
     font-style: italic;
 }
@@ -101,8 +132,6 @@ li {
   border-top: 1px solid black;
 }
 
-
-
 .course-listitem:nth-of-type(even){
   background-color: rgb(230, 230, 230);
 }
@@ -111,36 +140,8 @@ li {
     text-decoration: underline;
 }
 
-.filter_list {
-    padding: 1rem 1rem;
-    grid-area: filter_list;
-    background-color: rgb(179, 179, 179);
-    height: 100vh;
-    height: -webkit-fill-available;
-    display: grid;
-    grid-template-areas: 
-    "filter"
-    "list";
-    grid-template-rows: min-content 1fr;
-}
-
 .underlineable:hover, .copyable:hover {
-    text-decoration: underline;
-}
-
-/* filter area, above list of courses */
-
-.filter {
-  grid-area: filter;
-}
-
-.filter label {
-margin: 1rem 0.3rem;
-}
-
-.center-button {
-  width: 100%;
-  text-align: center;
+  text-decoration: underline;
 }
 
 .copyable {
@@ -200,6 +201,14 @@ input[type='checkbox'] {
   color:rgb(179, 179, 179);
 }
 
+/* mobile */
+
+@media only screen and (max-width: 950px) {
+  .focus-header {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+}
 @media only screen and (max-width: 600px) {
     .container {
         display: block;
@@ -208,8 +217,8 @@ input[type='checkbox'] {
     .filter_list {
         min-height: 60vh;
         height: auto;
-        max-height: 80vh;
-        grid-template-rows: min-content 1fr;
+        max-height: 100vh;
+        grid-template-rows: min-content min-content 1fr;
     }
     .header-right {
       flex: 0

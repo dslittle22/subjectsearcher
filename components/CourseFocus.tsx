@@ -1,4 +1,5 @@
 import { Course } from '@/interfaces/courses';
+import { isDev } from '@/lib/misc';
 import styles from '@/styles/coursesSplitView.module.css';
 import { CourseInfo } from './CourseInfo';
 
@@ -6,6 +7,8 @@ interface Props {
   focusedCourse: Course | null;
   semesterDropdown: JSX.Element
 }
+
+
 
 export default function CourseFocus({ focusedCourse, semesterDropdown }: Props) {
   return (
@@ -16,7 +19,7 @@ export default function CourseFocus({ focusedCourse, semesterDropdown }: Props) 
         <div className='header-right'> {' '}</div>
       </div>
       {focusedCourse === null ? (
-        <p>Loading info...</p>
+        <></>
       ) : (
           <CourseInfo course={focusedCourse} />
       )}

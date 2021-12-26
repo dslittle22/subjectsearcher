@@ -18,12 +18,7 @@ interface Props {
   ) => void;
 }
 
-export default function MultiSelectFilter({
-  data,
-  filterKey,
-  attr,
-  onFilterChange,
-}: Props): ReactElement {
+const MultiSelectFilter = ({ data, filterKey, attr, onFilterChange, }: Props): ReactElement => {
 
   const multiselectRef = useRef<Multiselect>(null)
 
@@ -36,7 +31,7 @@ export default function MultiSelectFilter({
   const handleOnChange = (selected: string[]) => {
     const queryStr = selected.map((val) => val.replaceAll(' ', '_')).join(',')
     addQueryParam(filterKey, queryStr)
-    onFilterChange(filterKey, getMultiSelectFilterFunction(selected, attr)); 
+    onFilterChange(filterKey, getMultiSelectFilterFunction(selected, attr, filterKey)); 
   }
 
   const style = {
@@ -64,8 +59,6 @@ export default function MultiSelectFilter({
     ? queryParam.replaceAll('_', ' ').split(',')
     : []
   }() 
-    
-  
 
   return (
     <div className='multiselect-dropdown-container'>
@@ -89,3 +82,5 @@ export default function MultiSelectFilter({
     </div>
   );
 }
+
+export default MultiSelectFilter

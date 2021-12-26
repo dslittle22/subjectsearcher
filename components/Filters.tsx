@@ -23,15 +23,21 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
 
   useEffect(() => {
     setSubjects(new Set(courses.map(course => course.subj_desc)))
-    setProfs(new Set(courses.map(course => course.allprofs)))
     setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
+    const nextProfs = new Set()
+    courses.forEach(course => {
+      if (!course.allprofs) return
+      course.allprofs.split(', ').forEach(name => {
+        nextProfs.add(name)
+      })
+    })
+    setProfs(nextProfs)
   }, [courses, filters, setFilteredCourses])
 
   const onFilterChange = (
     filterKey: string,
     filterFunction?: (course: Course) => boolean
   ) => {
-    if (isDev()) console.log('resetting filtered courses');
     setFilteredCourses(
       courses.filter(course =>
         applyFilters(course, { ...filters, [filterKey]: filterFunction })
@@ -40,15 +46,30 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
     setFilters({ ...filters, [filterKey]: filterFunction });
   };
 
-  return (
-    !courses.length ? <div className='filter'></div> : (
-        <div className="filter">
-         <QueryFilter filterKey='title' attr='title' onFilterChange={onFilterChange} />
-         <MultiSelectFilter onFilterChange={onFilterChange} data={Array.from(subjects)} filterKey='subject' attr='subj_desc'/>
-         <MultiSelectFilter onFilterChange={onFilterChange} data={Array.from(profs)} filterKey='professor' attr='allprofs'/>
-         </div>
-         ) 
+
+  return !courses.length ? (
+    <div className='filter'></div>
+  ) : (
+    <div className='filter'>
+      <QueryFilter
+        filterKey='title'
+        attr='title'
+        onFilterChange={onFilterChange}
+      />
+      <MultiSelectFilter
+        onFilterChange={onFilterChange}
+        data={Array.from(subjects)}
+        filterKey='subject'
+        attr='subj_desc'
+      />
+      <MultiSelectFilter
+        onFilterChange={onFilterChange}
+        data={Array.from(profs)}
+        filterKey='professor'
+        attr='allprofs'
+      />
       
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState} from 'react';
 import { CourseListItem } from '@/components/CourseListItem';
 import { Course } from '@/interfaces/courses';
+import StarredFilter from './StarredFilter';
 
 interface Props {
   filteredCourses: Course[];
@@ -9,6 +10,8 @@ interface Props {
 
 const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
   const [starredCourses, setStarredCourses] = useState(new Set<string>([]))
+  const [filterStarred, setFilterStarred] = useState(false)
+
 
   useEffect(() => {
     if (filteredCourses.length < 1) return
@@ -26,24 +29,21 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
     }
     localStorage.setItem('subject-searcher-starred', JSON.stringify(Array.from(updated)))
     setStarredCourses(updated)
-  }
+  }  
 
 
-  const resetStarred = () => {
-    localStorage.removeItem('subject-searcher-starred')
-    window.location.reload();
+  const onStarredFilterChange = () => {
+    setFilterStarred(!filterStarred)
   }
-  
 
   return (
     <>
-      <div className='center-button'>
-        <button onClick={resetStarred}>Reset starred courses</button>
-      </div>
+      <StarredFilter onStarredFilterChange={onStarredFilterChange} filterStarred={filterStarred}/>
       {filteredCourses.length ? (
         <ul className='courses-list'>
           {filteredCourses.map((course, idx) => (
             <CourseListItem
+              filterStarred={filterStarred}
               course={course}
               handleListClick={(course: Course) => setFocusedCourse(course)}
               key={course.crn + course.subj}
