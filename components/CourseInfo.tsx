@@ -1,6 +1,7 @@
 import { Course } from '@/interfaces/courses';
 import { MouseEvent } from 'react';
 import styles from '@/styles/courseInfo.module.css';
+import Collapse from './Collapse';
 
 const CourseInfo = ({ course }: { course: Course }) => {
   const copy = (
@@ -59,11 +60,10 @@ const CourseInfo = ({ course }: { course: Course }) => {
       </div>
       <div className={styles.left}>
         <div>
-
-        <p onClick={e => copy(e, course.crn)}>
-          {' '}
-          CRN: <span className='copyable'>{course.crn}</span> (click to copy)
-        </p>
+          <p onClick={e => copy(e, course.crn)}>
+            {' '}
+            CRN: <span className='copyable'>{course.crn}</span> (click to copy)
+          </p>
         </div>
 
         <div className={styles.info_priority}>
@@ -83,14 +83,15 @@ const CourseInfo = ({ course }: { course: Course }) => {
           {course.rules.prereq && <p>Prerequisites: {course.rules.prereq}</p>}
           Distribution: {formatRequirements()}
         </div>
-        
       </div>
       <div className={styles.right}>
-        <p className={styles.info_desc}>{course.description}</p>
         <div className={styles.info_slots}>
           <div>Capacity: {course.seats.capacity}</div>
           <div>Open spots: {course.seats.remaining}</div>
           <div>Pending requests: {course.seats.pending}</div>
+        </div>
+        <div className={styles.info_desc}>
+          <Collapse heading='Description' content={course.description} />
         </div>
       </div>
     </div>

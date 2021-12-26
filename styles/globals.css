@@ -201,6 +201,19 @@ input[type='checkbox'] {
   color:rgb(179, 179, 179);
 }
 
+/* Collapse component */
+.collapse-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.collapse-content.inactive {
+  display: none
+}
+
+
 /* mobile */
 
 @media only screen and (max-width: 950px) {
