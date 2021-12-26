@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState} from 'react';
-import { CourseListItem } from '@/components/CourseListItem';
+import CourseListItem from '@/components/CourseListItem';
 import { Course } from '@/interfaces/courses';
 import StarredFilter from './StarredFilter';
 

@@ -10,7 +10,7 @@ interface Props {
 }
 
 
-export const CourseListItem = ({ course, handleListClick, handleStarredChange, filterStarred }: Props) => {
+const CourseListItem = ({ course, handleListClick, handleStarredChange, filterStarred }: Props) => {
   const initialStarred = JSON.parse(
     localStorage.getItem('subject-searcher-starred') || '[]'
   ).includes(`${course.crn}-${course.term}`);
@@ -36,3 +36,5 @@ export const CourseListItem = ({ course, handleListClick, handleStarredChange, f
     </li>
   );
 };
+
+export default CourseListItem

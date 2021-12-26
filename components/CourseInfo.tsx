@@ -1,9 +1,8 @@
 import { Course } from '@/interfaces/courses';
 import { MouseEvent } from 'react';
 import styles from '@/styles/courseInfo.module.css';
-import { apiRouteToSemester } from '@/lib/dates';
 
-export const CourseInfo = ({ course }: { course: Course }) => {
+const CourseInfo = ({ course }: { course: Course }) => {
   const copy = (
     e: MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>,
     content: string
@@ -97,3 +96,5 @@ export const CourseInfo = ({ course }: { course: Course }) => {
     </div>
   );
 };
+
+export default CourseInfo

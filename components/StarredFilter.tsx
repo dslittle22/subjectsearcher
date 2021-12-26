@@ -5,7 +5,7 @@ interface Props {
     filterStarred: boolean 
 }
 
-export default function StarredFilter({onStarredFilterChange, filterStarred}: Props): ReactElement {
+const StarredFilter = ({onStarredFilterChange, filterStarred}: Props): ReactElement => {
 
     const resetStarred = () => {
         localStorage.removeItem('subject-searcher-starred')
@@ -20,3 +20,5 @@ export default function StarredFilter({onStarredFilterChange, filterStarred}: Pr
     </div>
     )
 }
+
+export default StarredFilter 
