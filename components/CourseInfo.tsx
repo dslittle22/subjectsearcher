@@ -12,7 +12,7 @@ export const CourseInfo = ({ course }: { course: Course }) => {
       navigator.clipboard.writeText(content).then(
         () => null,
         () => {
-          console.log('Failed to copy to clipboard.');
+          console.error('Failed to copy to clipboard.');
         }
       );
     }

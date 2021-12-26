@@ -5,7 +5,6 @@ export async function fetchData(year_s: QueryParam, season: QueryParam) {
   if (!process.env.NETLIFY && process.env.NODE_ENV === 'development') {
     const res = await fetch('http://localhost:5000/courses')
     return await res.json()
-    // console.log('fetching!', year_s, season);
   }
   
   const yearValid =

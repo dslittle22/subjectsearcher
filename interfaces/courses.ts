@@ -28,6 +28,7 @@ export interface Course {
   addlmajmin?:  any[];
   seats:        Seats;
   meetings:     Meetings;
+  allprofs?:    string;
 }
 
 export interface Crosslisting {

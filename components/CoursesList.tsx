@@ -13,35 +13,49 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
   useEffect(() => {
     if (filteredCourses.length < 1) return
     setFocusedCourse(filteredCourses[0])
-    const starredLocalStorage = localStorage.getItem('subjectsearcherstarred')
+    const starredLocalStorage = localStorage.getItem('subject-searcher-starred')
     if (starredLocalStorage) setStarredCourses(new Set(JSON.parse(starredLocalStorage)))
   }, [filteredCourses])
 
   const handleStarredChange = (crn: string, term: string, adding: boolean) => {
     let updated = new Set<string>(starredCourses);
     if (adding) {
-      console.log(`adding ${crn}-${term}`);
       updated.add(`${crn}-${term}`)
     } else {
-      console.log(`removing ${crn}-${term}`);
       updated.delete(`${crn}-${term}`)
     }
-    localStorage.setItem('subjectsearcherstarred', JSON.stringify(Array.from(updated)))
+    localStorage.setItem('subject-searcher-starred', JSON.stringify(Array.from(updated)))
     setStarredCourses(updated)
   }
 
-  return filteredCourses.length ? (
-      <ul className='courses-list'>
+
+  const resetStarred = () => {
+    localStorage.removeItem('subject-searcher-starred')
+    window.location.reload();
+  }
+  
+
+  return (
+    <>
+      <div className='center-button'>
+        <button onClick={resetStarred}>Reset starred courses</button>
+      </div>
+      {filteredCourses.length ? (
+        <ul className='courses-list'>
           {filteredCourses.map((course, idx) => (
-        <CourseListItem
-          course={course}
-          handleListClick={(course: Course) => setFocusedCourse(course)}
-          key={course.crn + course.subj}
-          handleStarredChange={handleStarredChange}
-        />
-      ))}
+            <CourseListItem
+              course={course}
+              handleListClick={(course: Course) => setFocusedCourse(course)}
+              key={course.crn + course.subj}
+              handleStarredChange={handleStarredChange}
+            />
+          ))}
         </ul>
-  ) : <div>No courses found. :(</div>
+      ) : (
+        <div>No courses found. :(</div>
+      )}
+    </>
+  );
 };
 
 export default CoursesList;

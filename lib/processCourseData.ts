@@ -46,5 +46,6 @@ export const trimCourse = (course: Course) => {
     delete course.prefmajors
     delete course.prefminors
     delete course.addlmajmin
+    course.allprofs = course.meetings.classes.map(a => a.instructors.map(instructor => instructor.firstname + ' ' + instructor.lastname).join(', ')).join(', ')
     return course
 }

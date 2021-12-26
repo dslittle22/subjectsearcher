@@ -1,6 +1,5 @@
 import { Course } from '@/interfaces/courses';
-import { Filters, QueryDropdown} from '@/interfaces/filters';
-import { formatProfName } from './processCourseData';
+import { Filters } from '@/interfaces/filters';
 
 export const addQueryParam = (key: string, value: string) => {
   const url = new URL(window.location.href);
@@ -24,15 +23,18 @@ export const applyFilters = (course: Course, filters: Filters): boolean => {
   return flag;
 };
 
-export const getQueryFilterFunction = (searchStr: string, queryDropdown: QueryDropdown) => {
-  return queryDropdown !== 'title' && queryDropdown !== 'professor'
-    ? undefined
-    : (course: Course) => {
-        const courseAttr =
-          queryDropdown === 'title' ? course.title : formatProfName(course);
-
-        return courseAttr
+export const getQueryFilterFunction = (searchStr: string, attr: keyof Course) => {
+  return (course: Course) => {
+        return (course[attr] as string) 
           .toLocaleLowerCase()
           .includes(searchStr.toLocaleLowerCase());
       };
+}
+
+export const getMultiSelectFilterFunction = (selected: string[], attr: keyof Course) => {
+  return selected.length === 0
+  ? undefined
+  : (course: Course) => {
+      return selected.includes(course[attr] as string);
+    };
 }

@@ -10,7 +10,7 @@ interface Props {
 
 
 export const CourseListItem = ({ course, handleListClick, handleStarredChange }: Props) => {
-  const initialStarred = JSON.parse(localStorage.getItem('subjectsearcherstarred') || '').includes(`${course.crn}-${course.term}`)
+  const initialStarred = JSON.parse(localStorage.getItem('subject-searcher-starred') || '[]').includes(`${course.crn}-${course.term}`)
   const [isStarred, setIsStarred] = useState(initialStarred)
 
   const handleStarClick = (e: MouseEvent<HTMLElement>) => {
