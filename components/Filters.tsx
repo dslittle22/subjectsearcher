@@ -9,6 +9,7 @@ import { Filters } from '@/interfaces/filters';
 import QueryFilter from './QueryFilter';
 import {applyFilters} from '@/lib/filterLogic'
 import MultiSelectFilter from '@/components/MultiSelectFilter';
+import { isDev } from '@/lib/misc';
 
 interface Props {
   courses: Course[];
@@ -26,13 +27,21 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
     setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
   }, [courses, filters, setFilteredCourses])
 
-  const onFilterChange = (filterKey: string, filterFunction?: (course: Course) => boolean) => {
-    setFilteredCourses(courses.filter(course => applyFilters(course, {...filters, [filterKey]: filterFunction})));
-    setFilters({...filters, [filterKey]: filterFunction})
-  }
+  const onFilterChange = (
+    filterKey: string,
+    filterFunction?: (course: Course) => boolean
+  ) => {
+    if (isDev()) console.log('resetting filtered courses');
+    setFilteredCourses(
+      courses.filter(course =>
+        applyFilters(course, { ...filters, [filterKey]: filterFunction })
+      )
+    );
+    setFilters({ ...filters, [filterKey]: filterFunction });
+  };
 
   return (
-    !courses.length ? <div className='filter'>loading...</div> : (
+    !courses.length ? <div className='filter'></div> : (
         <div className="filter">
          <QueryFilter filterKey='title' attr='title' onFilterChange={onFilterChange} />
          <MultiSelectFilter onFilterChange={onFilterChange} data={Array.from(subjects)} filterKey='subject' attr='subj_desc'/>
