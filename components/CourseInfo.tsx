@@ -1,6 +1,5 @@
 import { Course } from '@/interfaces/courses';
 import { MouseEvent } from 'react';
-import styles from '@/styles/courseInfo.module.css';
 import Collapse from './Collapse';
 
 const CourseInfo = ({ course }: { course: Course }) => {
@@ -48,8 +47,8 @@ const CourseInfo = ({ course }: { course: Course }) => {
   const pref = formatPreference();
 
   return (
-    <div className={styles.course_info}>
-      <div className={styles.info_top}>
+    <div className='course_info'>
+      <div className='info_top'>
         <p className='course-title'>
           {course.title} {course.sect !== '0' ? ` (${course.sect})` : ''}
         </p>
@@ -58,7 +57,7 @@ const CourseInfo = ({ course }: { course: Course }) => {
           {', ' + course.subj + ' ' + course.num}
         </p>
       </div>
-      <div className={styles.left}>
+      <div className='left'>
         <div>
           <p onClick={e => copy(e, course.crn)}>
             {' '}
@@ -66,31 +65,31 @@ const CourseInfo = ({ course }: { course: Course }) => {
           </p>
         </div>
 
-        <div className={styles.info_priority}>
+        <div className='info_priority'>
           {pref && (
             <div>
               Registration rules:
               {pref}
             </div>
           )}
-          <p>
+          {/* <p>
             Priority for shut-out?{' '}
             {course.rules.priority === 'true' ? 'Yes' : 'No'}
-          </p>
+          </p> */}
         </div>
-        <div className={styles.info_reg}>
-          <p>Credits: {course.credit.substr(0, 4)}</p>
+      </div>
+      <div className='right'>
+        <div className='info_reg'>
+          <p>Credits: {course.credit.substring(0, 4)}</p>
           {course.rules.prereq && <p>Prerequisites: {course.rules.prereq}</p>}
           Distribution: {formatRequirements()}
         </div>
-      </div>
-      <div className={styles.right}>
-        <div className={styles.info_slots}>
+        <div className='info_slots'>
           <div>Capacity: {course.seats.capacity}</div>
           <div>Open spots: {course.seats.remaining}</div>
           <div>Pending requests: {course.seats.pending}</div>
         </div>
-        <div className={styles.info_desc}>
+        <div className='info_desc'>
           <Collapse heading='Description' content={course.description} />
         </div>
       </div>

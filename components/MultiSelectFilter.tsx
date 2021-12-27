@@ -34,25 +34,6 @@ const MultiSelectFilter = ({ data, filterKey, attr, onFilterChange, }: Props): R
     onFilterChange(filterKey, getMultiSelectFilterFunction(selected, attr, filterKey)); 
   }
 
-  const style = {
-    searchBox: {
-      backgroundColor: 'white'
-      },
-    inputField: {
-      minHeight: '20px',
-    },
-    chips: {
-      background: 'grey',
-      marginBottom: '0px'
-    },
-    option: {
-      color: 'white',
-      background: 'grey',
-      borderTop: 'white solid 1px',
-      padding: '0 2px 5px 2px'
-    }
-  }
-
   const initialSelected: string[] = function() {
     const queryParam = getQueryParam(filterKey)
     return queryParam
@@ -72,7 +53,6 @@ const MultiSelectFilter = ({ data, filterKey, attr, onFilterChange, }: Props): R
         hidePlaceholder
         showCheckbox
         closeIcon='close'
-        style={style}
         selectedValues={initialSelected}
       ></Multiselect>
       <button className='dropdown-button' style={{ flex: '1', marginLeft: '10px' }} onClick={resetSelected}>
