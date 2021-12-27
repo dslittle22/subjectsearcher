@@ -4,8 +4,8 @@ type QueryParam = string | string[] | undefined;
 
 export async function fetchData(year_s: QueryParam, season: QueryParam) {
   if (isDev()) {
-    // const res = await fetch('http://localhost:5000/courses')
-    // return await res.json()
+    const res = await fetch('http://localhost:5000/courses')
+    return await res.json()
   }
   
   const yearValid =
