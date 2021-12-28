@@ -1,5 +1,4 @@
 import { Course } from '@/interfaces/courses';
-import { isDev } from '@/lib/misc';
 import CourseInfo from './CourseInfo';
 
 interface Props {

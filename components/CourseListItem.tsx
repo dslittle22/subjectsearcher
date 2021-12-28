@@ -1,6 +1,6 @@
 import {MouseEvent, useState} from 'react';
 import { Course } from '@/interfaces/courses';
-import { formatProfName, formatTime } from '@/lib/processCourseData';
+import { formatTime } from '@/lib/processCourseData';
 
 interface Props {
   course: Course;
@@ -21,16 +21,23 @@ const CourseListItem = ({ course, handleListClick, handleStarredChange, filterSt
     setIsStarred(!isStarred)
   }
 
-  return filterStarred && !isStarred? <></> : (
-    <li className='course-listitem' >
-      <p className='course-title'>
-        <span className={`star ${isStarred? 'starred' : ''}`} onClick={handleStarClick}>{`★ `}</span>
+  return filterStarred && !isStarred ? (
+    <></>
+  ) : (
+    <li className='course-listitem'>
+      <p>
+        <span
+          className={`star ${isStarred ? 'starred' : ''}`}
+          onClick={handleStarClick}
+        >{`★ `}</span>
         <span onClick={() => handleListClick(course)} className='underlineable'>
-        {course.title} {course.sect !== "0" ? ` (${course.sect})` : ''}
-        <br />
-        {course.subj_desc + ' ' + course.num + ', '}
-        {`${course.allprofs ? course.allprofs : 'Professor unknown'}. `}
-        {formatTime(course)}
+          <span className='course-title'>{course.title}
+          {course.sect !== '0' ? ` (${course.sect})` : ''}
+          </span>
+          {/* <br /> */}
+          {' - ' + course.subj_desc + ' ' + course.num + ', '}
+          {`${course.allprofs ? course.allprofs : 'Professor unknown'}. `}
+          {formatTime(course)}
         </span>
       </p>
     </li>

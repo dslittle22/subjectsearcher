@@ -1,16 +1,13 @@
-import { useState, useEffect, ChangeEvent } from 'react';
-import { useRouter } from 'next/router';
+import { ChangeEvent } from 'react';
 import {Semester} from '@/interfaces/semester'
-import {semesterToRoute, listPastSemesters} from '@/lib/dates'
+import {semesterToRoute, pastSemestersList} from '@/lib/dates'
 
 interface Props {
-    onSemesterDropdownChange: (semesterRoute: string) => void 
+    onSemesterDropdownChange: (semesterRoute: string) => void;
+    semester: Semester | null;
 }
 
-const SemesterDropdown = ({onSemesterDropdownChange}: Props) => {
-    const [pastSemesters, setPastSemesters] = useState<Semester[]>([]);
-    const [currentSemester, setCurrentSemester] = useState<Semester | null>(null)
-  const router = useRouter();
+const SemesterDropdown = ({onSemesterDropdownChange, semester}: Props) => {
 
   const stringifySemester = (semester: Semester) =>
     String(semester.year) + ' ' + semester.season;
@@ -27,22 +24,14 @@ const SemesterDropdown = ({onSemesterDropdownChange}: Props) => {
     ) => {
       const [year_s, season] = getOptionValue(e).split(' ');
         const semesterRoute = semesterToRoute({
-          year: parseInt(year_s),
+          year: Number(year_s),
           season: season === 'spring' ? 'spring' : 'fall',
         });
         onSemesterDropdownChange(semesterRoute)
     };
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    setCurrentSemester({
-      year: parseInt(router.query.year as string),
-      season: router.query.season === 'spring' ? 'spring' : 'fall',
-    });
-    setPastSemesters(listPastSemesters())
-  }, [router, router.isReady]);
 
-  return currentSemester === null ? 
+  return semester === null ? 
   (<div className='sem-dropdown'>Semester: loading...</div>) : 
   (
     <div className='sem-dropdown'>
@@ -50,10 +39,10 @@ const SemesterDropdown = ({onSemesterDropdownChange}: Props) => {
     <select
       name='semester'
       id='semester'
-      value={stringifySemester(currentSemester)}
+      value={stringifySemester(semester)}
       onChange={handleSemesterSelectorChange}
     >
-      {pastSemesters.map((semester, i) => (
+      {pastSemestersList.map((semester, i) => (
         <option key={i} value={stringifySemester(semester)}>
           {stringifySemester(semester)}
         </option>

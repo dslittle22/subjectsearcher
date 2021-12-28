@@ -9,7 +9,6 @@ import { Filters } from '@/interfaces/filters';
 import QueryFilter from './QueryFilter';
 import {applyFilters} from '@/lib/filterLogic'
 import MultiSelectFilter from '@/components/MultiSelectFilter';
-import { isDev } from '@/lib/misc';
 
 interface Props {
   courses: Course[];
@@ -17,22 +16,25 @@ interface Props {
 }
 
 const Filters = ({ courses, setFilteredCourses }: Props) => {
-  const [filters, setFilters] = useState<Filters>({})
-  const [subjects, setSubjects] = useState(new Set())
-  const [profs, setProfs] = useState(new Set())
+  const [filters, setFilters] = useState<Filters>({});
+  const [subjects, setSubjects] = useState(new Set());
+  const [profs, setProfs] = useState(new Set());
 
   useEffect(() => {
-    setSubjects(new Set(courses.map(course => course.subj_desc)))
-    setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
-    const nextProfs = new Set()
+    setSubjects(new Set(courses.map(course => course.subj_desc)));
+    const nextProfs = new Set();
     courses.forEach(course => {
-      if (!course.allprofs) return
+      if (!course.allprofs) return;
       course.allprofs.split(', ').forEach(name => {
-        nextProfs.add(name)
-      })
-    })
-    setProfs(nextProfs)
-  }, [courses, filters, setFilteredCourses])
+        nextProfs.add(name);
+      });
+    });
+    setProfs(nextProfs);
+  }, [courses]);
+
+  useEffect(() => {
+    setFilteredCourses(courses.filter(course => applyFilters(course, filters)));
+  }, [courses, filters, setFilteredCourses]);
 
   const onFilterChange = (
     filterKey: string,
@@ -45,7 +47,6 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
     );
     setFilters({ ...filters, [filterKey]: filterFunction });
   };
-
 
   return !courses.length ? (
     <div className='filter'></div>
@@ -68,7 +69,6 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
         filterKey='professor'
         attr='allprofs'
       />
-      
     </div>
   );
 };

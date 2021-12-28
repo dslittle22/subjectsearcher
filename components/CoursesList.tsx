@@ -12,7 +12,6 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
   const [starredCourses, setStarredCourses] = useState(new Set<string>([]))
   const [filterStarred, setFilterStarred] = useState(false)
 
-
   useEffect(() => {
     if (filteredCourses.length < 1) return
     setFocusedCourse(filteredCourses[0])
@@ -31,7 +30,6 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
     setStarredCourses(updated)
   }  
 
-
   const onStarredFilterChange = () => {
     setFilterStarred(!filterStarred)
   }
@@ -41,7 +39,7 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
       <StarredFilter onStarredFilterChange={onStarredFilterChange} filterStarred={filterStarred}/>
       {filteredCourses.length ? (
         <ul className='courses-list'>
-          {filteredCourses.map((course, idx) => (
+          {filteredCourses.map((course) => (
             <CourseListItem
               filterStarred={filterStarred}
               course={course}

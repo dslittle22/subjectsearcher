@@ -8,6 +8,10 @@ import CoursesList from '@/components/CoursesList';
 import Filters from '@/components/Filters';
 import SemesterDropdown from './SemesterDropdown';
 import { trimCourse } from '@/lib/processCourseData';
+import { getQueryParam } from '@/lib/filterLogic';
+import { incrementSemester } from '@/lib/dates';
+import { Semester } from '@/interfaces/semester';
+import { isDev } from '@/lib/misc';
 
 const App = () => {
   const [courses, setCourses] = useState<Course[]>([])
@@ -20,14 +24,29 @@ const App = () => {
 
     const tryToFetch = async () => {
       const { year, season } = router.query;
-      const courses = await fetchData(year, season);
-      if (courses === false) {
-        router.push('/');
-      } else if (courses === -1) {
-        alert("uh oh, couldn't complete request");
-      } else {
+      if (getQueryParam('latest') === 'true') {
+        // if fetching latest, try to fetch current + next semester
+        const currentCourses = fetchData(year, season);
+        const nextSemester = incrementSemester({
+          year: Number(year),
+          season
+        } as Semester)
+        const nextCourses = fetchData(nextSemester.year.toString(), nextSemester.season)
+        const [current, next] = await Promise.all([currentCourses, nextCourses])
+        const courses = next.length === 0 ? current : next
+
         setCourses(courses.map((course: Course) => trimCourse(course)));
         setFilteredCourses(courses)
+      } else {
+        const courses = await fetchData(year, season);
+        if (courses === false || courses.length === 0) {
+          router.push('/');
+        } else if (courses === -1) {
+          alert("uh oh, couldn't complete request");
+        } else {
+          setCourses(courses.map((course: Course) => trimCourse(course)));
+          setFilteredCourses(courses)
+        }
       }
     };
 
@@ -39,9 +58,21 @@ const App = () => {
     setFilteredCourses([])
     setFocusedCourse(null)
     router.push(semesterRoute)
-  }
+  }  
 
-  const semesterDropdown = <SemesterDropdown onSemesterDropdownChange={onSemesterDropdownChange} />
+  let semester: Semester | null = null;
+  if (courses[0]?.term) {
+    const term = courses[0].term  
+      semester = {
+        season: term.substring(4) === '10' ? 'fall' : 'spring',
+        year:
+          term.substring(4) === '10'
+            ? Number(term.substring(0, 4)) - 1
+            : Number(term.substring(0, 4)),
+      };
+  }
+  
+  const semesterDropdown = <SemesterDropdown onSemesterDropdownChange={onSemesterDropdownChange} semester={semester}/>
   const focus = <CourseFocus focusedCourse={focusedCourse} semesterDropdown={semesterDropdown}/>
   const filters = <Filters courses={courses} setFilteredCourses={setFilteredCourses}/>
   const list = courses.length < 1? (<p className='filter_list'>Loading courses...</p>) : (

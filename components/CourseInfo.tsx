@@ -2,7 +2,11 @@ import { Course } from '@/interfaces/courses';
 import { MouseEvent } from 'react';
 import Collapse from './Collapse';
 
-const CourseInfo = ({ course }: { course: Course }) => {
+interface Props {
+  course: Course
+}
+
+const CourseInfo = ({ course }: Props) => {
   const copy = (
     e: MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>,
     content: string
@@ -50,7 +54,8 @@ const CourseInfo = ({ course }: { course: Course }) => {
     <div className='course_info'>
       <div className='info_top'>
         <p className='course-title'>
-          {course.title} {course.sect !== '0' ? ` (${course.sect})` : ''}
+          {course.title} 
+          {course.sect !== '0' ? ` (${course.sect})` : ''}
         </p>
         <p>
           {course.subj_desc}

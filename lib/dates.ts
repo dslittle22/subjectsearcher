@@ -5,31 +5,15 @@ export const findCurrentSemester = (): Semester => {
   let now = new Date();
   let [year, month] = [now.getFullYear(), now.getMonth()];
 
-  const semester: Semester = {
+  return {
     year,
     season: month > 4 ? 'fall' : 'spring',
   }
-
-  // if (fetch(increment(semester)) is an array, return increment(semester))
-  // else
- return semester
 };
 
 export const findNextSemesterRoute = () => {
-  return semesterToRoute(incrementSemester(findCurrentSemester()));
+  return semesterToRoute(findCurrentSemester()) + '?latest=true';
 };
-
-export const listPastSemesters = () => {
-  const sems: Semester[] = []
-  const lastYear = 2013
-  const lastSeason = 'fall'
-  let sem: Semester = incrementSemester(findCurrentSemester());
-  while (!(sem.year === lastYear && sem.season === lastSeason)) {
-    sems.push(sem)
-    sem = decrementSemester(sem)
-  }
-  return sems
-}
 
 export const incrementSemester = (query: Semester): Semester => {
   return query.season === 'fall'
@@ -53,12 +37,12 @@ export const semesterToApiRoute = (query: Semester): string => {
 
 export const apiRouteToSemester = (apiRoute: string): string => {
   let year, season: string 
-  if (apiRoute.substr(4) === '10') {
+  if (apiRoute.substring(4) === '10') {
     season = 'Fall'
-    year = String(parseInt(apiRoute.substr(0, 4)) - 1)
+    year = String(Number(apiRoute.substr(0, 4)) - 1)
   } else {
     season = 'Spring'
-    year = String(parseInt(apiRoute.substr(0, 4)))
+    year = apiRoute.substr(0, 4)
   }
   return season + ' ' + year
 }
@@ -66,3 +50,15 @@ export const apiRouteToSemester = (apiRoute: string): string => {
 export const semesterToRoute = (query: Semester): string => {
   return `/${query.year}/${query.season}`;
 };
+
+export const pastSemestersList = (function a() {
+  const semesters: Semester[] = []
+  const lastYear = 2013
+  const lastSeason = 'fall'
+  let sem: Semester = incrementSemester(findCurrentSemester());
+  while (!(sem.year === lastYear && sem.season === lastSeason)) {
+    semesters.push(sem)
+    sem = decrementSemester(sem)
+  }
+  return semesters
+})()

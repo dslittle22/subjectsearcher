@@ -13,12 +13,25 @@ const StarredFilter = ({onStarredFilterChange, filterStarred}: Props): ReactElem
       }
     
     return (
-        
       <div className='center-button'>
-      <span className={`star ${filterStarred? 'starred' : ''}`} onClick={onStarredFilterChange}>{`★ `}</span>
-      <button onClick={resetStarred}>Reset starred</button>
-    </div>
-    )
+        <button
+          className={`${filterStarred ? 'starred' : ''}`}
+          onClick={onStarredFilterChange}
+        >
+          {filterStarred ? (
+            'Show all'
+          ) : (
+            <>
+              {'Show only '}
+              <span className={`star ${filterStarred ? 'starred' : ''}`}>
+                {` ★ `}
+              </span>
+            </>
+          )}
+        </button>
+        <button onClick={resetStarred}>Reset starred</button>
+      </div>
+    );
 }
 
 export default StarredFilter 

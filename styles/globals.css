@@ -3,7 +3,7 @@
   --teal-2: #013c58;
   --teal-3: #00537a;
   --yellow-1: #fec819;
-  --yellow-2: #ffe942;
+  --yellow-2: #ffff00;
   --off-white: #f2f0e8e9;
 }
 
@@ -57,6 +57,7 @@ select {
 }
 
 button {
+  min-height: 2.5rem;
   background-color: var(--yellow-1);
   color: var(--teal-2);
 }
@@ -171,8 +172,14 @@ grid-area: filter;
 
 .center-button {
   width: 100%;
-  text-align: center;
+  /* text-align: center; */
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 1rem;
+}
+.center-button button:nth-child(1) {
+  cursor: pointer;
+  padding: 0.1rem 0.5rem;
 }
 
 .search-input {
@@ -297,7 +304,7 @@ input[type='checkbox'] {
 }
 
 .star:hover, .star.starred {
-  color: var(--yellow-1);
+  color: var(--yellow-2);
   text-decoration: none;
 }
 
