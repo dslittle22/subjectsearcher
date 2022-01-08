@@ -12,6 +12,7 @@ import { getQueryParam } from '@/lib/filterLogic';
 import { incrementSemester } from '@/lib/dates';
 import { Semester } from '@/interfaces/semester';
 import { isDev } from '@/lib/misc';
+import MobileHeader from './MobileHeader';
 
 const App = () => {
   const [courses, setCourses] = useState<Course[]>([])
@@ -79,7 +80,12 @@ const App = () => {
     <CoursesList filteredCourses={filteredCourses} setFocusedCourse={setFocusedCourse}/>
   )
 
-  return (<SplitView left={focus} right={(<div className='filter_list'>{filters}{list}</div>)} />)
+  return (
+  <>
+  <MobileHeader semesterDropdown={semesterDropdown} />
+  <SplitView left={focus} right={(<div className='filter_list'>{filters}{list}</div>)} />
+  </>
+  )
 
 }
 export default App;

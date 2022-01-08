@@ -35,7 +35,7 @@ const SemesterDropdown = ({onSemesterDropdownChange, semester}: Props) => {
   (<div className='sem-dropdown'>Semester: loading...</div>) : 
   (
     <div className='sem-dropdown'>
-    <label htmlFor='semester'>Semester: </label> <br />
+    <label htmlFor='semester'>Semester: </label> 
     <select
       name='semester'
       id='semester'
