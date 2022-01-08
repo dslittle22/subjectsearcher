@@ -100,6 +100,10 @@ li {
   display: none;
 }
 
+.mobile_course_info {
+  display: none;
+}
+
 .course_info {
   margin: 1rem;
   display: grid;
@@ -117,14 +121,6 @@ li {
 
 .info_top .course-title {
   font-size: 22px;
-}
-
-.right {
-  grid-area: right;
-}
-
-.left {
-  grid-area: left;
 }
 
 .info_desc {
@@ -337,7 +333,7 @@ input[type='checkbox'] {
 }
 @media only screen and (max-width: 600px) {
   .container {
-    grid-template-rows: 80vh auto;
+    grid-template-rows: 75vh auto;
     grid-template-columns: 1fr;
     grid-template-areas: 'filter_list' 'focus';
   }
@@ -355,11 +351,30 @@ input[type='checkbox'] {
     padding: 1rem 0;
   }
 
-  .semester-dropdown {
-    display: inline;
-  }
-
   .focus-header {
     display: none;
+  }
+
+  .course_info {
+    display: none;
+  }
+  
+  .mobile_course_info {
+    margin: 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-areas:
+      'top top'
+      'left right'
+      'bottom bottom';
+    grid-template-columns: 2fr 3fr;
+  }
+
+  .info_desc {
+    grid-area: bottom;
+    background-color: var(--teal-3);
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px var(--off-white) solid;
   }
 }

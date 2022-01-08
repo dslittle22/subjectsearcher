@@ -1,6 +1,7 @@
 import { Course } from '@/interfaces/courses';
 import { MouseEvent } from 'react';
 import Collapse from './Collapse';
+import MobileCourseInfo from './MobileCourseInfo';
 
 interface Props {
   course: Course
@@ -51,6 +52,7 @@ const CourseInfo = ({ course }: Props) => {
   const pref = formatPreference();
 
   return (
+    <>
     <div className='course_info'>
       <div className='info_top'>
         <p className='course-title'>
@@ -62,27 +64,22 @@ const CourseInfo = ({ course }: Props) => {
           {', ' + course.subj + ' ' + course.num}
         </p>
       </div>
+      
       <div className='left'>
-        <div>
-          <p onClick={e => copy(e, course.crn)}>
-            {' '}
-            CRN: <span className='copyable'>{course.crn}</span> (click to copy)
-          </p>
+        <div onClick={e => copy(e, course.crn)}>
+          CRN: <span className='copyable'>{course.crn}</span> (click to copy)
         </div>
-
-        <div className='info_priority'>
-          {pref && (
-            <div>
-              Registration rules:
-              {pref}
-            </div>
-          )}
-          {/* <p>
-            Priority for shut-out?{' '}
-            {course.rules.priority === 'true' ? 'Yes' : 'No'}
-          </p> */}
-        </div>
+        {pref && (
+          <div className='info_priority'>
+            Registration rules:
+            {pref}
+            {/* <p>
+              Priority for shut-out?{' '} {course.rules.priority === 'true' ? 'Yes' : 'No'}
+            </p> */}
+          </div>
+        )}
       </div>
+
       <div className='right'>
         <div className='info_reg'>
           <p>Credits: {course.credit.substring(0, 4)}</p>
@@ -99,6 +96,9 @@ const CourseInfo = ({ course }: Props) => {
         </div>
       </div>
     </div>
+      <MobileCourseInfo copy={copy} course={course} formatPreference={formatPreference} formatRequirements={formatRequirements} />
+    </>
+
   );
 };
 
