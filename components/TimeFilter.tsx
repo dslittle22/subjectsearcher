@@ -24,13 +24,13 @@ const TimeFilter = ({ filterKey, onFilterChange }: Props) => {
     const [startTime, setStartTime] = useState(getQueryParam("start") || "10:00")
     const [endTime, setEndTime] = useState(getQueryParam("end") || "15:00")
     const [weekdays, setWeekdays] = useState<filterWeekdayState>({ 'm': false, 't': false, 'w': false, 'th': false, 'f': false })
-    const [include, setInclude] = useState(true)
+    const [only, setOnly] = useState(true)
 
     useEffect(() => {
         const colonRemovedStart = startTime.slice(0, 2) + startTime.slice(3, startTime.length)
         const colonRemovedEnd = endTime.slice(0, 2) + endTime.slice(3, endTime.length)
-        onFilterChange(filterKey, getTimeFilterFunction(colonRemovedStart, colonRemovedEnd, weekdays, include));
-    }, [startTime, endTime, weekdays, include]);
+        onFilterChange(filterKey, getTimeFilterFunction(colonRemovedStart, colonRemovedEnd, weekdays, only));
+    }, [startTime, endTime, weekdays, only]);
 
 
     const handleStartChange = (e: any) => {
@@ -86,8 +86,8 @@ const TimeFilter = ({ filterKey, onFilterChange }: Props) => {
             </div>
 
             <div className='timetab-container'>
-                <div onClick={() => {setInclude(true)}} className={`timetab includes ${include? 'selected' : ''}`}>Includes</div>
-                <div onClick={() => {setInclude(false)}} className={`timetab only ${!include? 'selected' : ''}`}>Only</div>
+                <div onClick={() => {setOnly(true)}} className={`timetab includes ${only? 'selected' : ''}`}>Only</div>
+                <div onClick={() => {setOnly(false)}} className={`timetab only ${!only? 'selected' : ''}`}>Exclude</div>
             </div>
         </>
     )

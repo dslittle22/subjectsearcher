@@ -49,14 +49,14 @@ export const getMultiSelectFilterFunction = (selected: string[], attr: keyof Cou
     };
   }
 }
-export const getTimeFilterFunction = (filterStart: string, filterEnd: string, filterWeekdays: filterWeekdayState, include: boolean) => {
+export const getTimeFilterFunction = (filterStart: string, filterEnd: string, filterWeekdays: filterWeekdayState, only: boolean) => {
   return (course: Course) => {
 
     // if no day checkboxes are checked, don't filter the course
     if (Object.values(filterWeekdays).every((v) => v === false)) return true
     if (course.meetingTimes === undefined) return false
 
-    if (!include) {
+    if (only) {
       // in "only" case, return false if the course doesn't have any checked days,
       // or if the course has extra days that aren't checked.
       const classDays = Object.keys(course.meetingTimes)
@@ -71,22 +71,22 @@ export const getTimeFilterFunction = (filterStart: string, filterEnd: string, fi
       if (!courseEnd || !courseStart) continue
       for (let [filterWeekday, checked] of Object.entries(filterWeekdays)) {
         if ((courseWeekday === filterWeekday) && checked) {
-          if (include) {
-
-            // don't filter if filter start time or end time is in between course start & end time
-            const startBtwn = filterStart <= courseStart && courseStart <= filterEnd
-            const endBtwn = filterStart <= courseEnd && courseEnd <= filterEnd
-            if (startBtwn || endBtwn) {
-              return true
+          if (only) {
+            if (courseStart < filterStart || filterEnd < courseEnd) {
+              return false
             }
           } else {
-            if (courseStart < filterStart || filterEnd < courseEnd) {
+            // exclude
+            const startBtwn = filterStart <= courseStart && courseStart <= filterEnd
+            const endBtwn = filterStart <= courseEnd && courseEnd <= filterEnd
+
+            if (startBtwn || endBtwn) {
               return false
             }
           }
         }
       }
     }
-    return !include
+    return true
   }
 }
