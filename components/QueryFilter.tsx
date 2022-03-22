@@ -25,7 +25,7 @@ const QueryFilter = ({ filterKey, attr, onFilterChange }: Props) => {
 
   useEffect(() => {
     onFilterChange(filterKey, getQueryFilterFunction(searchStr, attr));
-  }, [searchStr, ]);
+  }, [searchStr]);
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     addQueryParam('title', e.target.value.toLocaleLowerCase());

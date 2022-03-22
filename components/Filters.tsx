@@ -7,20 +7,30 @@ import {
 import { Course } from '@/interfaces/courses';
 import { Filters } from '@/interfaces/filters';
 import QueryFilter from './QueryFilter';
-import {applyFilters} from '@/lib/filterLogic'
+import { applyFilters } from '@/lib/filterLogic'
+import { getQueryParam, addQueryParam } from '@/lib/filterLogic'
 import MultiSelectFilter from '@/components/MultiSelectFilter';
+import Collapse from './Collapse';
+import TimeFilter from './TimeFilter';
+import StarredFilter from './StarredFilter';
 
 interface Props {
   courses: Course[];
   setFilteredCourses: Dispatch<SetStateAction<Course[]>>;
+  filterStarred: boolean;
+  setFilterStarred: Dispatch<SetStateAction<boolean>>;
 }
 
-const Filters = ({ courses, setFilteredCourses }: Props) => {
+const Filters = ({ courses, setFilteredCourses, filterStarred, setFilterStarred }: Props) => {
   const [filters, setFilters] = useState<Filters>({});
   const [subjects, setSubjects] = useState(new Set());
   const [profs, setProfs] = useState(new Set());
+  const [filterExpanded, setFilterExpanded] = useState(false);
 
   useEffect(() => {
+    const expandedLocalStorage = getQueryParam("filterexpanded")
+    if (expandedLocalStorage === "true") setFilterExpanded(true)
+
     setSubjects(new Set(courses.map(course => course.subj_desc)));
     const nextProfs = new Set();
     courses.forEach(course => {
@@ -48,6 +58,12 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
     setFilters({ ...filters, [filterKey]: filterFunction });
   };
 
+  const handleFilterCollapseClick = () => {
+    addQueryParam('filterexpanded', filterExpanded === true ? '' : 'true')
+    setFilterExpanded(!filterExpanded)
+  }
+
+  
   return !courses.length ? (
     <div className='filter'></div>
   ) : (
@@ -57,18 +73,27 @@ const Filters = ({ courses, setFilteredCourses }: Props) => {
         attr='title'
         onFilterChange={onFilterChange}
       />
-      <MultiSelectFilter
-        onFilterChange={onFilterChange}
-        data={Array.from(subjects)}
-        filterKey='subject'
-        attr='subj_desc'
-      />
-      <MultiSelectFilter
-        onFilterChange={onFilterChange}
-        data={Array.from(profs)}
-        filterKey='professor'
-        attr='allprofs'
-      />
+      <div className='filter-collapse-container' >
+      <Collapse heading='More filters' propsActive={filterExpanded} onHeaderClick={handleFilterCollapseClick}>
+
+        <MultiSelectFilter
+          onFilterChange={onFilterChange}
+          data={Array.from(subjects)}
+          filterKey='subject'
+          attr='subj_desc'
+          />
+        <MultiSelectFilter
+          onFilterChange={onFilterChange}
+          data={Array.from(profs)}
+          filterKey='professor'
+          attr='allprofs'
+          />
+
+        <TimeFilter onFilterChange={onFilterChange} filterKey='time'/>
+
+        <StarredFilter filterStarred={filterStarred} setFilterStarred={setFilterStarred} />
+      </Collapse>
+      </div>
     </div>
   );
 };

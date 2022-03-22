@@ -1,20 +1,37 @@
-import { Course } from '@/interfaces/courses';
+import { Course, meetingTimes } from '@/interfaces/courses';
+import { capitalize } from './misc';
 
-export const formatTime = (course: Course) => {
-  if (typeof course.meetings.classes[0] === 'undefined')
-    return 'Unknown meeting time';
-  const timeStr = course.meetings.classes[0].time;
-  if (timeStr.includes('TBA')) return 'meetings TBA';
+/**
+ * 
+ * @param course the course to set meetingTime attribute
+ * sets the meetingTime attribute, to an empty object if 
+ * no meetings available or time TBA, otherwise to the 
+ * specified object
+ */
+const parseTime = (course: Course) => {
+  if (!course.meetings || course.meetings.classes.length === 0) {
+    course.meetingTimes = {};
+    return;
+  }
 
-  let formatted = '';
-  const timeStrSplit = timeStr.split(' ');
-  const [days, start, _, end] = timeStrSplit;
-  formatted += days
-    .split('')
-    .map(l => l.replace('R', 'TH'))
-    .join('/');
-  formatted += ', ';
+  const courseMeetingTimes: meetingTimes = {}
+  course.meetings.classes.forEach(meeting => {
+    const timeStr = meeting.time
+    if (!timeStr.includes("TBA")) {
+    const [days, start, _, end] = timeStr.split(' ');
+      const daysSplit = days.split('')
+      daysSplit.forEach(day => {
+        if (day.toLocaleLowerCase() === 'r') day = 'th'
+        courseMeetingTimes[day.toLocaleLowerCase() as keyof meetingTimes] = {start, end}
+      })
+    }
+  });
+  course.meetingTimes = courseMeetingTimes;
+}
 
+
+const formatTimes = (start: string, end: string): string => {
+  let formatted = ''
   const startNon24Hour = String(
     ((Number(start.substring(0, 2)) + 11) % 12) + 1
   );
@@ -28,7 +45,35 @@ export const formatTime = (course: Course) => {
   let suffix = endHour < 12 || end == '2400' ? 'AM' : 'PM';
   formatted += endNon24Hour + endMinute + suffix;
   return formatted;
+}
+
+export const formatCourseTimes = (course: Course) => {
+  if (!course.meetingTimes || JSON.stringify(course.meetingTimes) === '{}') return "TBA"
+
+  // check if all days have the same times
+
+  const times: {[key: string]: string[] | undefined;} = {}
+  Object.entries 
+  for (const [day, {start, end}] of Object.entries(course.meetingTimes)) {
+    const formattedTime = formatTimes(start, end)
+    if (times[formattedTime] === undefined) {
+      times[formattedTime] = [day]
+    } else {
+      times[formattedTime]?.push(day)
+    }
+  }
+
+  const allTimesFormatted: string[] = []
+  for (const [time, days] of Object.entries(times)) {
+    if (days !== undefined) {
+      const daysStr = days.map(day => capitalize(day)).join("/")
+      allTimesFormatted.push(daysStr + ', ' + time)
+    }
+  }
+  return allTimesFormatted.join('; ')
 };
+
+
 
 export const trimCourse = (course: Course) => {
   delete course.comment;
@@ -50,5 +95,6 @@ export const trimCourse = (course: Course) => {
     });
   });
   course.allprofs = Array.from(profNames).join(', ');
+  parseTime(course)
   return course;
 };

@@ -1,16 +1,16 @@
 import {MouseEvent, useState} from 'react';
 import { Course } from '@/interfaces/courses';
-import { formatTime } from '@/lib/processCourseData';
+import { formatCourseTimes } from '@/lib/processCourseData';
 
 interface Props {
   course: Course;
   handleListClick: (course: Course) => void;
   handleStarredChange: (crn: string, term: string, adding: boolean) => void;
-  filterStarred: boolean;
+  isSelected: boolean;
 }
 
 
-const CourseListItem = ({ course, handleListClick, handleStarredChange, filterStarred }: Props) => {
+const CourseListItem = ({ course, handleListClick, handleStarredChange, isSelected }: Props) => {
   const initialStarred = JSON.parse(
     localStorage.getItem('subject-searcher-starred') || '[]'
   ).includes(`${course.crn}-${course.term}`);
@@ -21,10 +21,8 @@ const CourseListItem = ({ course, handleListClick, handleStarredChange, filterSt
     setIsStarred(!isStarred)
   }
 
-  return filterStarred && !isStarred ? (
-    <></>
-  ) : (
-    <li className='course-listitem'>
+  return (
+    <li className={'course-listitem' + `${isSelected ? ' selected' : ''}`}>
       <p>
         <span
           className={`star ${isStarred ? 'starred' : ''}`}
@@ -37,7 +35,7 @@ const CourseListItem = ({ course, handleListClick, handleStarredChange, filterSt
           {/* <br /> */}
           {' - ' + course.subj_desc + ' ' + course.num + ', '}
           {`${course.allprofs ? course.allprofs : 'Professor unknown'}. `}
-          {formatTime(course)}
+          {formatCourseTimes(course)}
         </span>
       </p>
     </li>

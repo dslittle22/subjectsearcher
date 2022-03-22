@@ -29,6 +29,15 @@ export interface Course {
   seats:        Seats;
   meetings:     Meetings;
   allprofs?:    string;
+  meetingTimes?: meetingTimes
+}
+
+export interface meetingTimes {
+  m?: {start: string, end: string}
+  t?: {start: string, end: string}
+  w?: {start: string, end: string}
+  th?: {start: string, end: string}
+  f?: {start: string, end: string}
 }
 
 export interface Crosslisting {

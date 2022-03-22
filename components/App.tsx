@@ -18,6 +18,7 @@ const App = () => {
   const [courses, setCourses] = useState<Course[]>([])
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([])
   const [focusedCourse, setFocusedCourse] = useState<Course | null>(null)
+  const [filterStarred, setFilterStarred] = useState(false)
   const router = useRouter();
 
   useEffect(() => {
@@ -58,7 +59,19 @@ const App = () => {
     setCourses([])
     setFilteredCourses([])
     setFocusedCourse(null)
-    router.push(semesterRoute)
+    //try to save and push query params
+    const qParams = window.location.href.split("?")[1]
+    console.log(qParams);
+
+    if (qParams && qParams !== "latest=true") {
+
+      const trimmedQParams = "?" + qParams.replace("latest=true&", "")
+      console.log(trimmedQParams);
+      router.push(semesterRoute + trimmedQParams)
+    }
+    else {
+      router.push(semesterRoute)
+    }
   }  
 
   let semester: Semester | null = null;
@@ -75,9 +88,9 @@ const App = () => {
   
   const semesterDropdown = <SemesterDropdown onSemesterDropdownChange={onSemesterDropdownChange} semester={semester}/>
   const focus = <CourseFocus focusedCourse={focusedCourse} semesterDropdown={semesterDropdown}/>
-  const filters = <Filters courses={courses} setFilteredCourses={setFilteredCourses}/>
+  const filters = <Filters courses={courses} setFilteredCourses={setFilteredCourses} filterStarred={filterStarred} setFilterStarred={setFilterStarred}/>
   const list = courses.length < 1? (<p className='filter_list'>Loading courses...</p>) : (
-    <CoursesList filteredCourses={filteredCourses} setFocusedCourse={setFocusedCourse}/>
+    <CoursesList filteredCourses={filteredCourses} focusedCourse={focusedCourse} setFocusedCourse={setFocusedCourse} filterStarred={filterStarred}/>
   )
 
   return (

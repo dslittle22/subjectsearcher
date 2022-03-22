@@ -1,14 +1,16 @@
-import { Dispatch, SetStateAction, useEffect, useState} from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import CourseListItem from '@/components/CourseListItem';
 import { Course } from '@/interfaces/courses';
 import StarredFilter from './StarredFilter';
 
 interface Props {
   filteredCourses: Course[];
-  setFocusedCourse:  Dispatch<SetStateAction<Course | null>>
+  setFocusedCourse: Dispatch<SetStateAction<Course | null>>;
+  focusedCourse: Course | null;
+  filterStarred: boolean;
 }
 
-const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
+const CoursesList = ({ filteredCourses, setFocusedCourse, focusedCourse }: Props) => {
   const [starredCourses, setStarredCourses] = useState(new Set<string>([]))
   const [filterStarred, setFilterStarred] = useState(false)
 
@@ -28,26 +30,30 @@ const CoursesList = ({ filteredCourses, setFocusedCourse }: Props) => {
     }
     localStorage.setItem('subject-searcher-starred', JSON.stringify(Array.from(updated)))
     setStarredCourses(updated)
-  }  
+  }
 
-  const onStarredFilterChange = () => {
-    setFilterStarred(!filterStarred)
+  const renderFilteredCourses = () => {
+    let starFilteredCourses = filteredCourses
+    if (filterStarred) {
+      starFilteredCourses = filteredCourses
+        .filter(course => starredCourses.has(`${course.crn}-${course.term}`))
+    }
+    return (starFilteredCourses.map((course) => (
+      <CourseListItem
+        course={course}
+        handleListClick={() => setFocusedCourse(course)}
+        key={course.crn + course.subj}
+        handleStarredChange={handleStarredChange}
+        isSelected={JSON.stringify(focusedCourse) === JSON.stringify(course)}
+      />
+    )))
   }
 
   return (
     <>
-      <StarredFilter onStarredFilterChange={onStarredFilterChange} filterStarred={filterStarred}/>
       {filteredCourses.length ? (
         <ul className='courses-list'>
-          {filteredCourses.map((course) => (
-            <CourseListItem
-              filterStarred={filterStarred}
-              course={course}
-              handleListClick={(course: Course) => setFocusedCourse(course)}
-              key={course.crn + course.subj}
-              handleStarredChange={handleStarredChange}
-            />
-          ))}
+          {renderFilteredCourses()}
         </ul>
       ) : (
         <div>No courses found. :(</div>
