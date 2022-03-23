@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import CourseListItem from '@/components/CourseListItem';
 import { Course } from '@/interfaces/courses';
-import StarredFilter from './StarredFilter';
 
 interface Props {
   filteredCourses: Course[];
@@ -10,9 +9,8 @@ interface Props {
   filterStarred: boolean;
 }
 
-const CoursesList = ({ filteredCourses, setFocusedCourse, focusedCourse }: Props) => {
+const CoursesList = ({ filteredCourses, setFocusedCourse, focusedCourse, filterStarred }: Props) => {
   const [starredCourses, setStarredCourses] = useState(new Set<string>([]))
-  const [filterStarred, setFilterStarred] = useState(false)
 
   useEffect(() => {
     if (filteredCourses.length < 1) return

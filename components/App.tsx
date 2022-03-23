@@ -11,7 +11,6 @@ import { trimCourse } from '@/lib/processCourseData';
 import { getQueryParam } from '@/lib/filterLogic';
 import { incrementSemester } from '@/lib/dates';
 import { Semester } from '@/interfaces/semester';
-import { isDev } from '@/lib/misc';
 import MobileHeader from './MobileHeader';
 
 const App = () => {
