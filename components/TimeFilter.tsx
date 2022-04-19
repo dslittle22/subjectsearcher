@@ -21,10 +21,16 @@ export interface filterWeekdayState {
 }
 
 const TimeFilter = ({ filterKey, onFilterChange }: Props) => {
+
+    const initialWeekdaysState = { 'm': false, 't': false, 'w': false, 'th': false, 'f': false }
+    const weekdayStateStr = getQueryParam("daysChecked");
+    if (weekdayStateStr) {
+        weekdayStateStr.split('-').forEach(day => initialWeekdaysState[day as keyof filterWeekdayState] = true)
+    }
+    const [weekdays, setWeekdays] = useState<filterWeekdayState>(initialWeekdaysState)
     const [startTime, setStartTime] = useState(getQueryParam("start") || "10:00")
     const [endTime, setEndTime] = useState(getQueryParam("end") || "15:00")
-    const [weekdays, setWeekdays] = useState<filterWeekdayState>({ 'm': false, 't': false, 'w': false, 'th': false, 'f': false })
-    const [only, setOnly] = useState(true)
+    const [only, setOnly] = useState(!(getQueryParam('timeMode') === 'exclude'))
 
     useEffect(() => {
         const colonRemovedStart = startTime.slice(0, 2) + startTime.slice(3, startTime.length)
@@ -44,12 +50,24 @@ const TimeFilter = ({ filterKey, onFilterChange }: Props) => {
         addQueryParam("end", newTime)
         setEndTime(newTime)
     }
+
     const handleWeekdayCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let prevState = Object.assign({}, weekdays);
-        prevState[e.target.name as keyof filterWeekdayState] = !weekdays[e.target.name as keyof filterWeekdayState]
+        const weekday: keyof filterWeekdayState = e.target.name as keyof filterWeekdayState;
+        prevState[weekday] = !weekdays[weekday]
         setWeekdays(prevState)
+        addQueryParam("daysChecked", Object.keys(prevState).filter(day => prevState[day as keyof filterWeekdayState] === true).join('-'))
     }
 
+    const handleTimetabChange = (e: any) => {
+        if (e.target.id === 'only') {
+            setOnly(true)
+            addQueryParam('timeMode', 'only')
+        } else {
+            setOnly(false)
+            addQueryParam('timeMode', 'exclude')
+        }
+    }
 
     return (
         <>
@@ -84,10 +102,11 @@ const TimeFilter = ({ filterKey, onFilterChange }: Props) => {
 
                 </div>
             </div>
+            <p>Courses are not filtered by time if no days are checked.</p>
 
             <div className='timetab-container'>
-                <div onClick={() => {setOnly(true)}} className={`timetab includes ${only? 'selected' : ''}`}>Only</div>
-                <div onClick={() => {setOnly(false)}} className={`timetab only ${!only? 'selected' : ''}`}>Exclude</div>
+                <div onClick={handleTimetabChange} id='only' className={`timetab includes ${only ? 'selected' : ''}`}>Only</div>
+                <div onClick={handleTimetabChange} id='exclude' className={`timetab only ${!only ? 'selected' : ''}`}>Exclude</div>
             </div>
         </>
     )

@@ -30,7 +30,9 @@ const Filters = ({ courses, setFilteredCourses, filterStarred, setFilterStarred 
   useEffect(() => {
     const expandedLocalStorage = getQueryParam("filterexpanded")
     if (expandedLocalStorage === "true") setFilterExpanded(true)
+  }, []);
 
+  useEffect(() => {
     setSubjects(new Set(courses.map(course => course.subj_desc)));
     const nextProfs = new Set();
     courses.forEach(course => {

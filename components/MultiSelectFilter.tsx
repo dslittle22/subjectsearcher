@@ -1,4 +1,4 @@
-import { ReactElement, useRef} from 'react'
+import { ReactElement, useEffect, useRef} from 'react'
 import {
   getQueryParam,
   addQueryParam,
@@ -29,7 +29,7 @@ const MultiSelectFilter = ({ data, filterKey, attr, onFilterChange, }: Props): R
   }
 
   const handleOnChange = (selected: string[]) => {
-    const queryStr = selected.map((val) => val.replaceAll(' ', '_')).join(',')
+    const queryStr = selected.map((val) => val.replaceAll(' ', '_')).join('--')
     addQueryParam(filterKey, queryStr)
     onFilterChange(filterKey, getMultiSelectFilterFunction(selected, attr, filterKey)); 
   }
@@ -37,7 +37,7 @@ const MultiSelectFilter = ({ data, filterKey, attr, onFilterChange, }: Props): R
   const initialSelected: string[] = function() {
     const queryParam = getQueryParam(filterKey)
     return queryParam
-    ? queryParam.replaceAll('_', ' ').split(',')
+    ? queryParam.replaceAll('_', ' ').split('--')
     : []
   }() 
 
